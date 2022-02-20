@@ -1,8 +1,8 @@
 <?php
-
+namespace Aijkl\AdShare;
 class Phrase
 {
-    protected string $langCode;
+    public string $langCode;
 
     public string $PasswordMinError;
     public string $PasswordMaxError;
@@ -17,6 +17,8 @@ class Phrase
     public string $PasswordPlaceHolder;
     public string $MailPlaceHolder;
     public string $NamePlaceHolder;
+
+    public string $LoginTitle;
 
     function __construct(string $langCode)
     {

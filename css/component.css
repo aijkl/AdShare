@@ -1,0 +1,175 @@
+body{
+    color: var(--text-normal);
+    --container-margin: 10px;
+}
+
+/* framework override */
+.slick-prev:before {
+    color: lightslategray;
+}
+.slick-next:before {
+    color: lightslategray;
+}
+
+.message-container{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    margin: var(--container-margin) auto;
+    flex-direction: column;
+
+    background-color: var(--background-secondary);
+}
+.message-container:first-child{
+    margin: 0 auto var(--container-margin) auto;
+}
+
+.profile-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--container-margin);
+}
+
+.message-image-slider{
+    width: 92%;
+    margin: 0 auto 10px auto;
+}
+.message-image{
+    max-height: 70vh;
+    margin: 0 10px;
+}
+.user-name{
+    font-size: 1.3rem;
+}
+.user-icon{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+/*  message container footer */
+.message-footer-container{}
+.message-footer-element-container{
+    padding-left: 3px;
+}
+.message-footer-element{
+    display: inline-block;
+    margin-right: 5px;
+}
+.like-count{
+    margin-right: 5px;
+}
+.tag{
+    text-decoration: none;
+    margin-right: 4px;
+}
+
+/* text section */
+.message-text-section-container{
+    padding: 10px;
+    background-color: var(--background-primary);
+    margin-bottom: var(--container-margin);
+}
+.message-text-section-title{
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+/* 検索コンテナ― */
+.search-container{
+    width: 50%;
+    padding: 30px;
+    margin: 0 auto 0 auto;
+    background-color: white;
+}
+.search-inner-container{
+    margin-bottom: 10px;
+}
+.search-container-title{
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+.search-container-label{
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+.search-container-icon{
+    display: inline-block;
+    margin-right: 8px;
+}
+.search-input{
+    padding-left: 5px;
+    background-color: var(--background-primary);
+}
+
+.text-section-container{
+    width: var(--width-sub-visual);
+    margin: 0 auto;
+    background-color: var(--background-secondary);
+}
+.text-section-container-title{
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.mini-categories-list-container{
+    width: 250px;
+    display: inline-flex;
+    margin-right: 70px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.mini-categories-container{
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+.mini-category-container-inner{
+    padding: 20px;
+    background-color: var(--background-secondary);
+}
+.mini-category-container{
+    padding: 8px 5px 5px 5px;
+    display: block;
+    border-bottom: 2px #b4b4b5 solid;
+}
+.mini-category-container:last-of-type{
+    border-bottom: none;
+}
+.mini-categories-container-title{
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.mini-category-title{
+    display: inline;
+    margin-right: 10px;
+    font-size: 1.3rem;
+}
+.mini-category-likes{
+    display: inline;
+    float: right;
+}
+
+/* popular */
+.popular-main-container{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 auto 0 auto;
+}
+
+/* スマホ */
+@media (max-width: 599px){
+    .mini-categories-list-container{
+        display: none;
+    }
+}
+
+/* タブレット */
+@media (min-width: 600px) and (max-width: 769px){
+    .mini-categories-list-container{
+        display: none;
+    }
+}

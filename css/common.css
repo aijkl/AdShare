@@ -1,0 +1,120 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    font-family: "Segoe UI", Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--background-primary);
+    line-height: 1.4rem;
+}
+
+:root{
+    --background-primary: #f6f6f4;
+    --background-secondary: #FFF;
+    --text-normal: #black;
+    --width-main-visual: 50vw;
+    --width-sub-visual: 80%;
+    --background-footer: #3D4040;
+}
+
+.wrap{
+    /*float: left;*/
+
+    width: 80%;
+    margin: 0 auto 0 auto;
+    padding: 70px 10px 10px 10px;
+
+    flex: 1;
+}
+
+.popular-timeline-container{
+    max-width: 50%;
+    flex: 1;
+}
+
+/* フッター */
+.footer{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    padding: 50px;
+    color: whitesmoke;
+    font-weight: bold;
+    background-color: var(--background-footer);
+}
+.footer-sub-container{
+    display: flex;
+    flex-direction: column;
+
+    margin-right: 5rem;
+}
+.footer-link{
+    margin-bottom: 5px;
+}
+.footer-sub-container-title{
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+.footer-title{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* グローバルナビゲーション */
+.global-navigation{
+    color: whitesmoke;
+
+    width: 100%;
+    padding: 20px;
+    background-color: gray;
+
+    position: sticky;
+    z-index: 9999;
+    top: 0;
+}
+.global-navigation-inner{
+    width: var(--width-main-visual);
+    margin: 0 auto 0 auto;
+}
+.global-navigation-title{
+    display: inline-block;
+
+    margin-right: 15px;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+.global-navigation-list{
+    display: inline-block;
+    font-size: 1.3rem;
+}
+.global-navigation-list-item{
+    display: inline-block;
+    margin-right: 10px;
+}
+.global-navigation-input{
+    color: black;
+    padding: 5px;
+    background-color: whitesmoke;
+}
+
+.timeline-container{
+    max-width: 60%;
+    margin: 0 auto 0 auto;
+}
+
+/* スマホ */
+@media (max-width: 599px){
+    .popular-timeline-container{
+        max-width: none;
+        width: 100%;
+    }
+}
+
+/* タブレット */
+@media (min-width: 600px) and (max-width: 769px){
+    .popular-timeline-container{
+        max-width: none;
+        width: 100%;
+    }
+}

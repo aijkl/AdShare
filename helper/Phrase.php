@@ -1,5 +1,5 @@
 <?php
-
+namespace Aijkl\AdShare;
 class Phrase
 {
     protected string $langCode;

@@ -1,5 +1,5 @@
 <?php
-
+namespace Aijkl\AdShare;
 class PhraseStore
 {
     private static PhraseStore $instance;

@@ -1,6 +1,9 @@
 <?php
+use Aijkl\AdShare\ConstParameters;
+use Aijkl\AdShare\PhraseStore;
+
 // todo fix hard code
-$phrase = PhraseStore::GetInstance()->GetPhrase("ja");
+$phrase = Aijkl\AdShare\PhraseStore::GetInstance()->GetPhrase("ja");
 ?>
 
 <head>

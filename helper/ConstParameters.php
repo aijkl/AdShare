@@ -1,5 +1,5 @@
 <?php
-
+namespace Aijkl\AdShare;
 class ConstParameters
 {
     public const Id = "id";

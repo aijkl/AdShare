@@ -1,11 +1,13 @@
 <?php
 namespace Aijkl\AdShare;
+use InvalidArgumentException;
+
 class PhraseStore
 {
     private static PhraseStore $instance;
     private array $phrases;
 
-    function __construct()
+    public function __construct()
     {
         $jp  = new Phrase("ja");
         $jp->PasswordMinError = "パスワードは".ConstParameters::PasswordMin."文字以上にしてください";
@@ -21,7 +23,9 @@ class PhraseStore
         $jp->Password = "パスワード";
         $jp->NewRegister = "新規登録";
 
-        $phrases = array();
+        $jp->LoginTitle = "ログイン";
+
+        $this->phrases = array($jp);
     }
 
     static function GetInstance(): PhraseStore

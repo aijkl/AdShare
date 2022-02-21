@@ -38,7 +38,7 @@ body{
     flex-direction: row;
 
     width: 100%;
-    padding: 50px;
+    padding: 30px;
     color: whitesmoke;
     font-weight: bold;
     background-color: var(--background-footer);

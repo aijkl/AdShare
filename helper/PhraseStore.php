@@ -1,4 +1,5 @@
 <?php
+
 namespace Aijkl\AdShare;
 use InvalidArgumentException;
 
@@ -18,7 +19,6 @@ class PhraseStore
         $jp->MailPlaceHolder = "メール";
         $jp->NamePlaceHolder = "名前";
 
-        $jp->NameMinError = "";
         $jp->Mail = "メールアドレス";
         $jp->Password = "パスワード";
         $jp->NewRegister = "新規登録";

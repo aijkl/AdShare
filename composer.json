@@ -1,7 +1,13 @@
 {
   "autoload": {
     "psr-4": {
-      "Aijkl\\AdShare\\": "helper"
+      "Aijkl\\AdShare\\": [
+        "models",
+        "helper"
+      ]
     }
+  },
+  "require": {
+    "netresearch/jsonmapper": "^4.0"
   }
 }

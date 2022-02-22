@@ -16,7 +16,18 @@ class ComposerStaticInit314099d4ff21514cca6c4dac3783a912
     public static $prefixDirsPsr4 = array (
         'Aijkl\\AdShare\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/helper',
+            0 => __DIR__ . '/../..' . '/models',
+            1 => __DIR__ . '/../..' . '/helper',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'J' => 
+        array (
+            'JsonMapper' => 
+            array (
+                0 => __DIR__ . '/..' . '/netresearch/jsonmapper/src',
+            ),
         ),
     );
 
@@ -29,6 +40,7 @@ class ComposerStaticInit314099d4ff21514cca6c4dac3783a912
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit314099d4ff21514cca6c4dac3783a912::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit314099d4ff21514cca6c4dac3783a912::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit314099d4ff21514cca6c4dac3783a912::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit314099d4ff21514cca6c4dac3783a912::$classMap;
 
         }, null, ClassLoader::class);

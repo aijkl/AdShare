@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Aijkl\\AdShare\\' => array($baseDir . '/helper'),
+    'Aijkl\\AdShare\\' => array($baseDir . '/models', $baseDir . '/helper'),
 );

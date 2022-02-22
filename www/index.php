@@ -1,5 +1,5 @@
 <head>
-    <?php $title = "ホーム"; require 'head-inner-common.php'; ?>
+    <?php $title = "ホーム"; require '../app/components/head-inner-common.php'; ?>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/component.js"></script>
 </head>
 <body>
-    <?php require 'global-navigation.php' ?>
+    <?php $title = "ホーム"; require '../app/components/global-navigation.php'; ?>
     <div class="wrap">
         <div class="timeline-container">
             <article class="message-container">
@@ -146,5 +146,5 @@
             </article>
         </div>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require '../app/components/footer.php' ?>
 </body>

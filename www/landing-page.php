@@ -1,5 +1,5 @@
 <head>
-    <?php $title = "ようこそ"; require 'head-inner-common.php';?>
+    <?php $title = "ようこそ"; require '../../app/components/head-inner-common.php';?>
     <!-- lp -->
     <link href="css/component.css" rel="stylesheet">
     <link href="css/landing-page.css" rel="stylesheet">
@@ -7,7 +7,7 @@
     <link href="css/component.css" rel="stylesheet">
 </head>
 <body>
-    <?php require 'global-navigation.php' ?>
+    <?php require '../app/components/global-navigation.php' ?>
     <div class="wrap">
         <div class="lp-container">
             <div class="catch-copy-container">
@@ -33,5 +33,5 @@
             <script src="js/landing-page.js"></script>
         </div>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require '../app/components/footer.php' ?>
 </body>

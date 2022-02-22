@@ -8,7 +8,13 @@ class Phrase
     public string $PasswordMaxError;
     public string $NameMinError;
     public string $NameMaxError;
+    public string $MailMinError;
+    public string $MailMaxError;
 
+    public string $AuthBadParameter;
+
+    public string $PasswordRequireError;
+    public string $MailRequireError;
 
     public string $Mail;
     public string $Password;
@@ -25,9 +31,6 @@ class Phrase
         $this->langCode = $langCode;
     }
 
-    /**
-     * @return string
-     */
     public function getLangCode(): string
     {
         return $this->langCode;

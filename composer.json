@@ -1,7 +1,17 @@
 {
   "autoload": {
     "psr-4": {
-      "Aijkl\\AdShare\\": "helper"
+      "Aijkl\\AdShare\\": [
+        "models",
+        "app/helper",
+        "app/database",
+        "app/api"
+      ]
     }
+  },
+  "require": {
+    "netresearch/jsonmapper": "^4.0",
+    "ext-pdo": "*",
+    "vlucas/phpdotenv": "^5.4"
   }
 }

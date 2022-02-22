@@ -1,15 +1,15 @@
 <head>
-    <?php $title = "ホーム"; require 'head-inner-common.php'; ?>
+    <?php $title = "ホーム"; require '../app/components/head-inner-common.php'; ?>
     <title>Home</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/js/component.js"></script>
+    <script type="text/javascript" src="/www/js/component.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <link href="/css/component.css" rel="stylesheet">
+    <link href="/www/css/component.css" rel="stylesheet">
 </head>
 <body>
-    <?php require 'global-navigation.php' ?>
+    <?php require '../app/components/global-navigation.php' ?>
     <div class="wrap">
         <div class="search-container">
             <div class="search-container-title">
@@ -42,5 +42,5 @@
             </div>
         </div>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require '../app/components/footer.php' ?>
 </body>

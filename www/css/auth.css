@@ -3,8 +3,8 @@
     margin: 0 auto 0 auto;
 }
 .auth-title{
-    margin-bottom: 50px;
-    line-height: 1.5;
+    margin-bottom: 35px;
+    line-height: 1.7;
     font-size: 2.5rem;
     border-bottom: #c7c7c7 1px solid;
     text-align: center;
@@ -14,7 +14,7 @@
     margin: 0 auto 16px auto;
     display: block;
 }
-.sign-in-error{
+.auth-error{
     width: 60%;
     margin: 0 auto 10px auto;
     color: firebrick;
@@ -29,7 +29,7 @@
     padding: 8px;
     font-size: 0.9rem;
 }
-.sign-in-input{
+.auth-input{
     width: 100%;
     margin: 0 auto 10px auto;
     display: block;
@@ -40,7 +40,7 @@
 .auth-label:nth-last-child(2) {
     margin-bottom: 20px;
 }
-.sign-in-button{
+.auth-button{
     width: 60%;
     margin: 0 auto 10px auto;
     display: block;
@@ -49,7 +49,7 @@
     font-size: 0.9rem;
     text-align: center;
 }
-.sign-in-button:active
+.auth-button:active
 {
     background-color: #b4b4b5;
 }

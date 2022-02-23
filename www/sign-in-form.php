@@ -1,5 +1,4 @@
 <?php
-use Aijkl\AdShare\ConstParameters;
 use Aijkl\AdShare\PhraseStore;
 
 require '../app/vendor/autoload.php';
@@ -17,20 +16,20 @@ $phrase = PhraseStore::getInstance()->getPhrase("ja");
     <div class="wrap">
         <div class="auth-box">
             <div class="auth-title"><?= $phrase->signInTitle ?></div>
-            <div id="api-error" class="sign-in-error"></div>
+            <div id="api-error" class="auth-error"></div>
             <label class="auth-label">
-                <input id="mail" type="email" class="sign-in-input" placeholder="<?= $phrase->mailPlaceHolder ?>">
-                <div id="mail-validate-message" class="sign-in-error"></div>
+                <input id="mail" type="email" class="auth-input" placeholder="<?= $phrase->mailPlaceHolder ?>">
+                <div id="mail-validate-message" class="auth-error"></div>
             </label>
             <label class="auth-label">
-                <input id="password" type="password" class="sign-in-input" placeholder="<?= $phrase->passwordPlaceHolder ?>">
-                <div id="password-validate-message" class="sign-in-error"></div>
+                <input id="password" type="password" class="auth-input" placeholder="<?= $phrase->passwordPlaceHolder ?>">
+                <div id="password-validate-message" class="auth-error"></div>
             </label>
             <label class="auth-label"><div class="sign-in-remember-me"><?= $phrase->rememberMeText ?></div>
                 <input id="remember-me" type="checkbox" class="sign-in-checkbox">
-                <div id="password-validate-message" class="sign-in-error"></div>
+                <div id="password-validate-message" class="auth-error"></div>
             </label>
-            <label class="sign-in-button">
+            <label class="auth-button">
                 <button id="sign-in-button">ログインする</button>
             </label>
         </div>

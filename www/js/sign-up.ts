@@ -1,7 +1,4 @@
-import {ApiClient} from './api-client'
-import {SignInRequest} from "./sign-in-request";
-import {Helper} from "./helper/Helper";
-import {SignInState} from "./state/sign-in-state";
+import {SignUpState} from "./state/sign-up-state";
 import {SignInLogic} from "./logic/sign-in-logic";
 
 let signInButton = document.getElementById("auth-button") as HTMLButtonElement;
@@ -12,7 +9,7 @@ let mailValidateMessage = document.getElementById("mail-validate-message") as HT
 let passwordValidateMessage = document.getElementById("password-validate-message") as HTMLElement;
 let rememberMe = document.getElementById("remember-me") as HTMLInputElement;
 
-let signInState = new SignInState();
+let signInState = new SignUpState();
 let signInLogic = new SignInLogic(signInState);
 
 signInState.StateChanged = () =>

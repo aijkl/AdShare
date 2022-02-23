@@ -1,9 +1,10 @@
 <?php
 
+namespace Aijkl\AdShare;
 class UserEntity
 {
-    public string $Id;
-    public string $Name;
-    public string $Mail;
-    public string $PasswordSha256;
+    public string $id;
+    public string $name;
+    public string $mail;
+    public string $passwordSha256;
 }

@@ -4,6 +4,7 @@ namespace Aijkl\AdShare;
 
 class SignInRequest
 {
-    public string $Mail;
-    public string $Password256;
+    public string $mail;
+    public string $password256;
+    public bool $rememberMe;
 }

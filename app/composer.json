@@ -2,10 +2,11 @@
   "autoload": {
     "psr-4": {
       "Aijkl\\AdShare\\": [
-        "models",
-        "app/helper",
-        "app/database",
-        "app/api"
+        "database",
+        "api",
+        "helper",
+        "database/entities",
+        "database/exceptions"
       ]
     }
   },

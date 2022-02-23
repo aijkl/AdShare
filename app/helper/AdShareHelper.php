@@ -4,12 +4,10 @@ namespace Aijkl\AdShare;
 
 // クラス間の依存を無くすとわかりやすい
 // 基本的にクラス間の依存はしないけど、このクラスが例外
-use AdShareDataBase;
 use Dotenv\Dotenv;
-
 class AdShareHelper
 {
-    static function IsNullOrEmpty($obj): bool
+    static function isNullOrEmpty($obj): bool
     {
         if($obj === 0 || $obj === "0"){
             return false;
@@ -18,67 +16,67 @@ class AdShareHelper
         return empty($obj);
     }
 
-    static function GetLanguageCode(string $defaultLanguage = ConstParameters::DefaultLangCode): string
+    static function getLanguageCode(string $defaultLanguage = ConstParameters::DEFAULT_LANG_CODE): string
     {
-        $languageCode = self::AsStringOrEmpty($_COOKIE,ConstParameters::DefaultLangCode);
-        if(AdShareHelper::IsNullOrEmpty($languageCode))
+        $languageCode = self::asStringOrEmpty($_COOKIE,ConstParameters::DEFAULT_LANG_CODE);
+        if(AdShareHelper::isNullOrEmpty($languageCode))
         {
-            return ConstParameters::DefaultLangCode;
+            return $defaultLanguage;
         }
         return $languageCode;
     }
 
-    static function CreateDataBase(): AdShareDataBase
+    static function createDataBase(): AdShareDataBase
     {
         Dotenv::createImmutable(__DIR__)->load();
-        return new AdShareDataBase("${$_ENV['DB_CONNECTION']}:dbname=${$_ENV['DB_DATABASE']};host=${$_ENV['DB_CONNECTION']};port=${$_ENV['DB_PORT']}",$_ENV['DB_USERNAME'],$_ENV['DB_PASSWORD']);
+        return new AdShareDataBase("{$_ENV['DB_CONNECTION']}:dbname={$_ENV['DB_DATABASE']};host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']}",$_ENV['DB_USERNAME'],$_ENV['DB_PASSWORD']);
     }
 
-    static function CheckFormatMail(Phrase $phrase,$receivedMail,Response &$response) :bool
+    static function checkFormatMail(Phrase $phrase, $receivedMail, Response &$response) :bool
     {
-        if(AdShareHelper::IsNullOrEmpty($receivedMail))
+        if(AdShareHelper::isNullOrEmpty($receivedMail))
         {
-            $response = new Response(false,400, $phrase->MailRequireError);
+            $response = new Response(false,400, $phrase->mailRequireError);
             return false;
         }
-        if(strlen($receivedMail) > ConstParameters::MailMax)
+        if(strlen($receivedMail) > ConstParameters::MAIL_MAX)
         {
-            $response = new Response(false,400, $phrase->MailMaxError);
+            $response = new Response(false,400, $phrase->mailMaxError);
             return false;
         }
-        if(strlen($receivedMail) < ConstParameters::MailMin)
+        if(strlen($receivedMail) < ConstParameters::MAIL_MIN)
         {
-            $response = new Response(false,400, $phrase->MailMinError);
+            $response = new Response(false,400, $phrase->mailMinError);
             return false;
         }
 
         return true;
     }
 
-    static function CheckFormatPassword(Phrase $phrase,$receivedPassword,Response &$response) :bool
+    static function checkFormatPassword(Phrase $phrase, $receivedPassword, Response &$response) :bool
     {
-        if(AdShareHelper::IsNullOrEmpty($receivedPassword))
+        if(AdShareHelper::isNullOrEmpty($receivedPassword))
         {
-            $response = new Response(false,400, $phrase->PasswordRequireError);
+            $response = new Response(false,400, $phrase->passwordRequireError);
             return false;
         }
-        if(strlen($receivedPassword) > ConstParameters::PasswordMax)
+        if(strlen($receivedPassword) > ConstParameters::PASSWORD_MAX)
         {
-            $response = new Response(false,400, $phrase->PasswordMaxError);
+            $response = new Response(false,400, $phrase->passwordMaxError);
             return false;
         }
-        if(strlen($receivedPassword) < ConstParameters::PasswordMin)
+        if(strlen($receivedPassword) < ConstParameters::PASSWORD_MIN)
         {
-            $response = new Response(false,400, $phrase->PasswordMinError);
+            $response = new Response(false,400, $phrase->passwordMinError);
             return false;
         }
 
         return true;
     }
 
-    static function AsStringOrEmpty(array $postArray,string $key) : string
+    static function asStringOrEmpty($value, string $key) : string
     {
-        if(isset($postArray[$key])) return $postArray[$key];
+        if(isset($value[$key])) return $value[$key];
         return "";
     }
 }

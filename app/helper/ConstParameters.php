@@ -2,19 +2,22 @@
 namespace Aijkl\AdShare;
 class ConstParameters
 {
-    public const Id = "id";
-    public const Name = "name";
-    public const Password = "password";
-    public const Mail = "mail";
+    public const ID = "id";
+    public const NAME = "name";
+    public const PASSWORD = "password";
+    public const REMEMBER_ME = "rememberMe";
+    public const MaiMAIL = "mail";
+    public const TOKEN_EXPIRES_SECOND = 9999;
+    public const TOKEN = "token";
 
-    public const PasswordMax = 120;
-    public const PasswordMin = 6;
-    public const NameMax = 10;
-    public const NameMin = 4;
-    public const MailMax = 30;
-    public const MailMin = 3;
+    public const PASSWORD_MAX = 120;
+    public const PASSWORD_MIN = 6;
+    public const NAME_MAX = 10;
+    public const NAME_MIN = 4;
+    public const MAIL_MAX = 30;
+    public const MAIL_MIN = 3;
 
-    public const MailRegex = "/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/"; // todo 検証
-    public const LangCodeCookieKey = "lang";
-    public const DefaultLangCode = "ja";
+    public const MAIL_REGEX = "/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/"; // todo 検証
+    public const LANG_CODE_COOKIE_KEY = "lang";
+    public const DEFAULT_LANG_CODE = "ja";
 }

@@ -1,6 +1,7 @@
 <?php
 
-use Aijkl\AdShare\SignInRequest;
+namespace Aijkl\AdShare;
+use PDO;
 
 class AdShareDataBase
 {
@@ -13,43 +14,43 @@ class AdShareDataBase
     /**
      * @throws UserNotFoundException
      */
-    function SignIn(SignInRequest $signInRequest) : TokenEntity
+    function signIn(SignInRequest $signInRequest) : TokenEntity
     {
         $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.mail = :mail AND users.password_sha256 = :password_sha256");
-        $sqlBuilder->bindValue(":mail",$signInRequest->Mail);
-        $sqlBuilder->bindValue(":password_sha256",$signInRequest->Password256);
+        $sqlBuilder->bindValue(":mail",$signInRequest->mail);
+        $sqlBuilder->bindValue(":password_sha256",$signInRequest->password256);
         $sqlBuilder->execute();
         $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
-        if(isset($result) == false)
+        if($result == false)
         {
             throw new UserNotFoundException();
         }
 
         $user = EntityConverter::ConvertToUserEntity($result);
-        return $this->CreateToken($user->Id);
+        return $this->createToken($user->id);
     }
 
-    function ValidateToken(string $userId,string $token): bool
+    function validateToken(string $userId, string $token): bool
     {
         $sqlBuilder = $this->database->prepare("SELECT * FROM tokens WHERE tokens.user_id = :user_id AND tokens.token = :token AND tokens.enable");
         $sqlBuilder->bindValue(":user_id",$userId);
-        $sqlBuilder->bindValue("token",$token);
+        $sqlBuilder->bindValue(":token",$token);
         $sqlBuilder->execute();
 
         return $sqlBuilder->execute() != null;
     }
 
-    private function CreateToken(string $userId): TokenEntity
+    private function createToken(string $userId): TokenEntity
     {
         $token = hash("sha256",strval(rand(PHP_INT_MIN,PHP_INT_MAX)));
-        $sqlBuilder = $this->database->prepare("INSERT INTO tokens (user_id,token) VALUES(':user_id',':token')");
+        $sqlBuilder = $this->database->prepare("INSERT INTO tokens (tokens.user_id,tokens.token) VALUES(:user_id,:token)");
         $sqlBuilder->bindValue(":user_id",$userId);
-        $sqlBuilder->bindValue("token",$token);
+        $sqlBuilder->bindValue(":token",$token);
         $sqlBuilder->execute();
 
         $tokenEntity = new TokenEntity();
-        $tokenEntity->Token = $token;
-        $tokenEntity->UserId = $userId;
+        $tokenEntity->token = $token;
+        $tokenEntity->userId = $userId;
         return $tokenEntity;
     }
 }

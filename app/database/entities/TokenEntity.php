@@ -1,7 +1,8 @@
 <?php
 
+namespace Aijkl\AdShare;
 class TokenEntity
 {
-    public string $UserId;
-    public string $Token;
+    public string $userId;
+    public string $token;
 }

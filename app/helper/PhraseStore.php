@@ -1,7 +1,6 @@
 <?php
 namespace Aijkl\AdShare;
 use InvalidArgumentException;
-
 namespace Aijkl\AdShare;
 
 class PhraseStore
@@ -12,29 +11,31 @@ class PhraseStore
     function __construct()
     {
         $jp  = new Phrase("ja");
-        $jp->AuthBadParameter = "認証情報が正しくありません！";
-        $jp->PasswordMinError = "パスワードは".ConstParameters::PasswordMin."文字以上にしてください";
-        $jp->PasswordMaxError = "パスワードは".ConstParameters::PasswordMax."文字以下にしてください";
-        $jp->NameMinError = "名前は".ConstParameters::NameMin."以上にしてください";
-        $jp->NameMaxError = "名前は".ConstParameters::NameMax."以下にしてください";
-        $jp->MailMinError = "メールは".ConstParameters::MailMin."以上にしてください";
-        $jp->MailMaxError = "メールは".ConstParameters::MailMax."以下にしてください";
-        $jp->PasswordPlaceHolder = "パスワード";
-        $jp->MailPlaceHolder = "メール";
-        $jp->NamePlaceHolder = "名前";
-        $jp->PasswordRequireError = "パスワードは必須です";
-        $jp->MailRequireError = "メールは必須です";
+        $jp->authBadParameter = "認証情報が正しくありません！";
+        $jp->passwordMinError = "パスワードは".ConstParameters::PASSWORD_MIN."文字以上にしてください";
+        $jp->passwordMaxError = "パスワードは".ConstParameters::PASSWORD_MAX."文字以下にしてください";
+        $jp->nameMinError = "名前は".ConstParameters::NAME_MIN."以上にしてください";
+        $jp->nameMaxError = "名前は".ConstParameters::NAME_MAX."以下にしてください";
+        $jp->mailMinError = "メールは".ConstParameters::MAIL_MIN."以上にしてください";
+        $jp->mailMaxError = "メールは".ConstParameters::MAIL_MAX."以下にしてください";
+        $jp->passwordPlaceHolder = "パスワード";
+        $jp->mailPlaceHolder = "メール";
+        $jp->namePlaceHolder = "名前";
+        $jp->passwordRequireError = "パスワードは必須です";
+        $jp->mailRequireError = "メールは必須です";
 
-        $jp->Mail = "メールアドレス";
-        $jp->Password = "パスワード";
-        $jp->NewRegister = "新規登録";
+        $jp->mail = "メールアドレス";
+        $jp->password = "パスワード";
+        $jp->newRegister = "新規登録";
+        $jp->rememberMeText = "ログインを保持する";
 
-        $jp->LoginTitle = "ログイン";
+        $jp->signInTitle = "Sign In";
+        $jp->signUpTitle = "Sign Up";
 
         $this->phrases = array($jp);
     }
 
-    static function GetInstance(): PhraseStore
+    static function getInstance(): PhraseStore
     {
         if(isset($instance) == false){
             $instance = new PhraseStore();
@@ -42,9 +43,9 @@ class PhraseStore
         return $instance;
     }
 
-    /// AdShareHelper::GetLanguageCode()
+    /// AdShareHelper::getLanguageCode()
     /// クラス間の依存を無くしたいのでDefault引数にはしないけどGetLanguageCodeを使う
-    function GetPhrase(string $langCode): Phrase
+    function getPhrase(string $langCode): Phrase
     {
         $phrases = array_filter($this->phrases,function($value) use ($langCode)
         {

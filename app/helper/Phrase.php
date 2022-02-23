@@ -4,27 +4,29 @@ class Phrase
 {
     public string $langCode;
 
-    public string $PasswordMinError;
-    public string $PasswordMaxError;
-    public string $NameMinError;
-    public string $NameMaxError;
-    public string $MailMinError;
-    public string $MailMaxError;
+    public string $passwordMinError;
+    public string $passwordMaxError;
+    public string $nameMinError;
+    public string $nameMaxError;
+    public string $mailMinError;
+    public string $mailMaxError;
 
-    public string $AuthBadParameter;
+    public string $authBadParameter;
 
-    public string $PasswordRequireError;
-    public string $MailRequireError;
+    public string $passwordRequireError;
+    public string $mailRequireError;
 
-    public string $Mail;
-    public string $Password;
-    public string $NewRegister;
+    public string $mail;
+    public string $password;
+    public string $newRegister;
+    public string $rememberMeText;
 
-    public string $PasswordPlaceHolder;
-    public string $MailPlaceHolder;
-    public string $NamePlaceHolder;
+    public string $passwordPlaceHolder;
+    public string $mailPlaceHolder;
+    public string $namePlaceHolder;
 
-    public string $LoginTitle;
+    public string $signInTitle;
+    public string $signUpTitle;
 
     function __construct(string $langCode)
     {

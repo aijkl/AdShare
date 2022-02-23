@@ -3,8 +3,6 @@
 namespace Aijkl\AdShare;
 class Response
 {
-    // todo fix
-    // Jsonにしたときにキャメルにするために小文字にした...
     public bool $success;
     public string $errorMessage;
     public object $data;

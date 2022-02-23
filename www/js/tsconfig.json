@@ -1,0 +1,30 @@
+{
+  "files": [
+    "api-client.ts",
+    "sign-in-request.ts",
+    "sign-in.ts",
+    "jquery.js",
+    "state/sign-in-state.ts",
+    "models/adshare-response.ts"
+  ],
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "AMD",
+    "strict": true,
+    "outDir": ".",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "lib": [
+      "dom",
+      "es2020"
+    ],
+    // memo copy and paste
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

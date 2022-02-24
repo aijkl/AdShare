@@ -1,16 +1,10 @@
 import {SignInState} from "../state/sign-in-state";
 import {ApiClient} from "../api-client";
-import {SignInRequest} from "../sign-in-request";
+import {SignInRequest} from "../models/sign-in-request";
+import {SharedAuth} from "../shared/shared-auth";
 
 export class SignInLogic
 {
-    private mailRegex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
-    private passwordMin = 6;
-    private passwordMax = 120;
-    private mailValidateErrorMessage = "メールアドレスの形式が正しくありません";
-    private passWorldMinErrorMessage = `パスワードは${this.passwordMin}以上にしてください`;
-    private passWorldMaxErrorMessage = `パスワードは${this.passwordMax}以下にしてください`;
-
     private signInState:SignInState
     private apiClient:ApiClient;
 
@@ -36,22 +30,19 @@ export class SignInLogic
     public stateChange(mail:string,password:string)
     {
         let disableSubmitButton = false;
-        if(password.length >= this.passwordMin && password.length <= this.passwordMax)
+        this.signInState.ErrorPasswordMessage = "";
+        if (password.length < SharedAuth.passwordMin)
         {
-            this.signInState.ErrorPasswordMessage = "";
-        }
-        if (password.length < this.passwordMin)
-        {
-            this.signInState.ErrorPasswordMessage = this.passWorldMinErrorMessage;
+            this.signInState.ErrorPasswordMessage = SharedAuth.passWorldMinErrorMessage;
             disableSubmitButton = true;
         }
-        if (password.length > this.passwordMax)
+        if (password.length > SharedAuth.passwordMax)
         {
-            this.signInState.ErrorPasswordMessage = this.passWorldMaxErrorMessage;
+            this.signInState.ErrorPasswordMessage = SharedAuth.passWorldMaxErrorMessage;
             disableSubmitButton = true;
         }
 
-        this.signInState.ErrorMailMessage = !this.mailRegex.test(mail) ? this.mailValidateErrorMessage : "";
+        this.signInState.ErrorMailMessage = !SharedAuth.mailRegex.test(mail) ? SharedAuth.mailValidateErrorMessage : "";
         this.signInState.DisableSubmitButton = disableSubmitButton;
         this.signInState?.StateChanged?.();
     }

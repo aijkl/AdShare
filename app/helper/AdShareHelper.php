@@ -39,12 +39,12 @@ class AdShareHelper
             $response = new Response(false,400, $phrase->mailRequireError);
             return false;
         }
-        if(strlen($receivedMail) > ConstParameters::MAIL_MAX)
+        if(mb_strlen($receivedMail) > ConstParameters::MAIL_MAX)
         {
             $response = new Response(false,400, $phrase->mailMaxError);
             return false;
         }
-        if(strlen($receivedMail) < ConstParameters::MAIL_MIN)
+        if(mb_strlen($receivedMail) < ConstParameters::MAIL_MIN)
         {
             $response = new Response(false,400, $phrase->mailMinError);
             return false;
@@ -60,14 +60,35 @@ class AdShareHelper
             $response = new Response(false,400, $phrase->passwordRequireError);
             return false;
         }
-        if(strlen($receivedPassword) > ConstParameters::PASSWORD_MAX)
+        if(mb_strlen($receivedPassword) > ConstParameters::PASSWORD_MAX)
         {
             $response = new Response(false,400, $phrase->passwordMaxError);
             return false;
         }
-        if(strlen($receivedPassword) < ConstParameters::PASSWORD_MIN)
+        if(mb_strlen($receivedPassword) < ConstParameters::PASSWORD_MIN)
         {
             $response = new Response(false,400, $phrase->passwordMinError);
+            return false;
+        }
+
+        return true;
+    }
+
+    static function checkFormatName(Phrase $phrase, $receivedName, Response &$response) :bool
+    {
+        if(AdShareHelper::isNullOrEmpty($receivedName))
+        {
+            $response = new Response(false,400, $phrase->nameRequireError);
+            return false;
+        }
+        if(mb_strlen($receivedName) > ConstParameters::NAME_MAX)
+        {
+            $response = new Response(false,400, $phrase->nameMaxError);
+            return false;
+        }
+        if(mb_strlen($receivedName) < ConstParameters::NAME_MIN)
+        {
+            $response = new Response(false,400, $phrase->nameMinError);
             return false;
         }
 

@@ -11,7 +11,7 @@ require '../../../app/vendor/autoload.php';
 
 $json = json_decode(file_get_contents("php://input"),true);
 $signInRequest = new SignInRequest();
-$signInRequest->mail = AdShareHelper::asStringOrEmpty($json,ConstParameters::MaiMAIL);
+$signInRequest->mail = AdShareHelper::asStringOrEmpty($json,ConstParameters::MAIL);
 $signInRequest->password256 = AdShareHelper::asStringOrEmpty($json,ConstParameters::PASSWORD);
 $signInRequest->rememberMe = AdShareHelper::asStringOrEmpty($json,ConstParameters::REMEMBER_ME);
 $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());

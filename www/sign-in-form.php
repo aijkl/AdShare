@@ -16,7 +16,7 @@ $phrase = PhraseStore::getInstance()->getPhrase("ja");
     <div class="wrap">
         <div class="auth-box">
             <div class="auth-title"><?= $phrase->signInTitle ?></div>
-            <div id="api-error" class="auth-error"></div>
+            <div id="api-error" class="api-error"></div>
             <label class="auth-label">
                 <input id="mail" type="email" class="auth-input" placeholder="<?= $phrase->mailPlaceHolder ?>">
                 <div id="mail-validate-message" class="auth-error"></div>
@@ -30,7 +30,7 @@ $phrase = PhraseStore::getInstance()->getPhrase("ja");
                 <div id="password-validate-message" class="auth-error"></div>
             </label>
             <label class="auth-button">
-                <button id="sign-in-button">ログインする</button>
+                <button id="auth-button"><?= $phrase->signInTitle ?></button>
             </label>
         </div>
     </div>

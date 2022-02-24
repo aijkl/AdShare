@@ -1,58 +1,61 @@
 import {SignUpState} from "../state/sign-up-state";
 import {ApiClient} from "../api-client";
-import {SignInRequest} from "../sign-in-request";
+import {SharedAuth} from "../shared/shared-auth";
+import {SignUpRequest} from "../models/sign-up-request";
 
-export class SignInLogic
+export class SignUpLogic
 {
-    private mailRegex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
-    private passwordMin = 6;
-    private passwordMax = 120;
-    private mailValidateErrorMessage = "メールアドレスの形式が正しくありません";
-    private passWorldMinErrorMessage = `パスワードは${this.passwordMin}以上にしてください`;
-    private passWorldMaxErrorMessage = `パスワードは${this.passwordMax}以下にしてください`;
-
-    private signInState:SignUpState
+    private signUpState:SignUpState
     private apiClient:ApiClient;
 
     public constructor(signInState:SignUpState)
     {
-        this.signInState = signInState;
+        this.signUpState = signInState;
         this.apiClient = new ApiClient();
     }
 
-    public signUp(mail:string,password:string,rememberMe:boolean)
+    public signUp(mail:string,password:string,name:string,rememberMe:boolean)
     {
-        this.apiClient.signIn(new SignInRequest(mail, password,rememberMe)).then((x)=>
+        this.apiClient.signUp(new SignUpRequest(mail, password,name,rememberMe)).then((x)=>
         {
-            this.signInState.ErrorAPIMessage = x.errorMessage;
-            this.signInState?.StateChanged?.();
+            this.signUpState.ErrorAPIMessage = x.errorMessage;
+            this.signUpState?.StateChanged?.();
         }).catch((error)=>
         {
-            this.signInState.ErrorAPIMessage = error.errorMessage;
-            this.signInState?.StateChanged?.();
+            this.signUpState.ErrorAPIMessage = error.errorMessage;
+            this.signUpState?.StateChanged?.();
         });
     }
 
-    public stateChange(mail:string,password:string)
+    public stateChange(mail:string,password:string,name:string)
     {
         let disableSubmitButton = false;
-        if(password.length >= this.passwordMin && password.length <= this.passwordMax)
+        this.signUpState.ErrorPasswordMessage = "";
+        this.signUpState.ErrorNameMessage = "";
+
+        if (password.length < SharedAuth.passwordMin)
         {
-            this.signInState.ErrorPasswordMessage = "";
-        }
-        if (password.length < this.passwordMin)
-        {
-            this.signInState.ErrorPasswordMessage = this.passWorldMinErrorMessage;
+            this.signUpState.ErrorPasswordMessage = SharedAuth.passWorldMinErrorMessage;
             disableSubmitButton = true;
         }
-        if (password.length > this.passwordMax)
+        if (password.length > SharedAuth.passwordMax)
         {
-            this.signInState.ErrorPasswordMessage = this.passWorldMaxErrorMessage;
+            this.signUpState.ErrorPasswordMessage = SharedAuth.passWorldMaxErrorMessage;
+            disableSubmitButton = true;
+        }
+        if(name.length < SharedAuth.nameMin)
+        {
+            this.signUpState.ErrorNameMessage = SharedAuth.nameMinErrorMessage;
+            disableSubmitButton = true;
+        }
+        if(name.length > SharedAuth.nameMax)
+        {
+            this.signUpState.ErrorNameMessage = SharedAuth.nameMaxErrorMessage;
             disableSubmitButton = true;
         }
 
-        this.signInState.ErrorMailMessage = !this.mailRegex.test(mail) ? this.mailValidateErrorMessage : "";
-        this.signInState.DisableSubmitButton = disableSubmitButton;
-        this.signInState?.StateChanged?.();
+        this.signUpState.ErrorMailMessage = !SharedAuth.mailRegex.test(mail) ? SharedAuth.mailValidateErrorMessage : "";
+        this.signUpState.DisableSubmitButton = disableSubmitButton;
+        this.signUpState?.StateChanged?.();
     }
 }

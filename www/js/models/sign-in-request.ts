@@ -1,4 +1,4 @@
-import {Helper} from "./helper/Helper";
+import {Helper} from "../helper/helper";
 
 export class SignInRequest
 {

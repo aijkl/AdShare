@@ -6,7 +6,7 @@ class ConstParameters
     public const NAME = "name";
     public const PASSWORD = "password";
     public const REMEMBER_ME = "rememberMe";
-    public const MaiMAIL = "mail";
+    public const MAIL = "mail";
     public const TOKEN_EXPIRES_SECOND = 9999;
     public const TOKEN = "token";
 

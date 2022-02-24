@@ -12,9 +12,11 @@ class Phrase
     public string $mailMaxError;
 
     public string $authBadParameter;
+    public string $userExitsError;
 
     public string $passwordRequireError;
     public string $mailRequireError;
+    public string $nameRequireError;
 
     public string $mail;
     public string $password;
@@ -24,6 +26,9 @@ class Phrase
     public string $passwordPlaceHolder;
     public string $mailPlaceHolder;
     public string $namePlaceHolder;
+
+    public string $signInButton;
+    public string $signUpButton;
 
     public string $signInTitle;
     public string $signUpTitle;

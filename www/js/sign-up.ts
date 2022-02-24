@@ -1,35 +1,38 @@
 import {SignUpState} from "./state/sign-up-state";
-import {SignInLogic} from "./logic/sign-in-logic";
+import {SignUpLogic} from "./logic/sign-up-logic";
 
-let signInButton = document.getElementById("auth-button") as HTMLButtonElement;
+let authButton = document.getElementById("auth-button") as HTMLButtonElement;
 let apiErrorText = document.getElementById("api-error") as HTMLButtonElement;
 let mailText  = document.getElementById("mail") as HTMLInputElement
+let nameText  = document.getElementById("name") as HTMLInputElement
 let passwordText = document.getElementById("password") as HTMLInputElement;
 let mailValidateMessage = document.getElementById("mail-validate-message") as HTMLElement;
+let nameValidateMessage = document.getElementById("name-validate-message") as HTMLElement;
 let passwordValidateMessage = document.getElementById("password-validate-message") as HTMLElement;
 let rememberMe = document.getElementById("remember-me") as HTMLInputElement;
 
-let signInState = new SignUpState();
-let signInLogic = new SignInLogic(signInState);
+let signUpState = new SignUpState();
+let signInLogic = new SignUpLogic(signUpState);
 
-signInState.StateChanged = () =>
+signUpState.StateChanged = () =>
 {
-    apiErrorText.innerText = signInState.ErrorAPIMessage;
-    passwordValidateMessage.innerText = signInState.ErrorPasswordMessage;
-    mailValidateMessage.innerText = signInState.ErrorMailMessage;
+    apiErrorText.innerText = signUpState.ErrorAPIMessage;
+    passwordValidateMessage.innerText = signUpState.ErrorPasswordMessage;
+    nameValidateMessage.innerText = signUpState.ErrorNameMessage;
+    mailValidateMessage.innerText = signUpState.ErrorMailMessage;
 };
 
-signInButton.addEventListener("click", ()=>
+authButton.addEventListener("click", ()=>
 {
-    signInLogic.stateChange(mailText.value ?? "",passwordText.value ?? "");
-    if(signInState.DisableSubmitButton)
+    signInLogic.stateChange(mailText.value ?? "",passwordText.value ?? "",nameText.value ?? "");
+    if(signUpState.DisableSubmitButton)
     {
         return;
     }
 
     try
     {
-        signInLogic.signIn(mailText.value,passwordText.value,rememberMe.checked);
+        signInLogic.signUp(mailText.value,passwordText.value,nameText.value,rememberMe.checked);
     }
     catch (e)
     {

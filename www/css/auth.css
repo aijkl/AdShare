@@ -14,9 +14,12 @@
     margin: 0 auto 16px auto;
     display: block;
 }
-.auth-error{
+.api-error{
     width: 60%;
     margin: 0 auto 10px auto;
+    color: firebrick;
+}
+.auth-error{
     color: firebrick;
 }
 .sign-in-remember-me{

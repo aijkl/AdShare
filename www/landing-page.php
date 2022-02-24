@@ -1,5 +1,5 @@
 <head>
-    <?php $title = "ようこそ"; require '../../app/components/head-inner-common.php';?>
+    <?php $title = "ようこそ"; require '../app/components/head-inner-common.php';?>
     <!-- lp -->
     <link href="css/component.css" rel="stylesheet">
     <link href="css/landing-page.css" rel="stylesheet">

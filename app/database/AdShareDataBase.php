@@ -19,7 +19,7 @@ class AdShareDataBase
     {
         $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.mail = :mail AND users.password_sha256 = :password_sha256");
         $sqlBuilder->bindValue(":mail",$signInRequest->mail);
-        $sqlBuilder->bindValue(":password_sha256",$signInRequest->password256);
+        $sqlBuilder->bindValue(":password_sha256",$signInRequest->passwordSha256);
         $sqlBuilder->execute();
         $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
         if($result == false)
@@ -47,7 +47,7 @@ class AdShareDataBase
         $sqlBuilder->bindValue(":id",$id);
         $sqlBuilder->bindValue(":name",$signUpRequest->name);
         $sqlBuilder->bindValue(":mail",$signUpRequest->mail);
-        $sqlBuilder->bindValue(":password_sha256",$signUpRequest->password256);
+        $sqlBuilder->bindValue(":password_sha256",$signUpRequest->passwordHash256);
         $sqlBuilder->execute();
         $sqlBuilder->fetch(PDO::FETCH_ASSOC);
 
@@ -57,10 +57,10 @@ class AdShareDataBase
     /**
      * @throws UserNotFoundException
      */
-    function fetchUser(string $mail) : UserEntity
+    function getUser(string $userId) : UserEntity
     {
-        $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.mail = :mail");
-        $sqlBuilder->bindValue(":mail",$mail);
+        $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.id = :userId");
+        $sqlBuilder->bindValue(":userId",$userId);
         $sqlBuilder->execute();
         $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
         if($result == false)
@@ -79,20 +79,37 @@ class AdShareDataBase
         return $sqlBuilder->fetch(PDO::FETCH_ASSOC) == true;
     }
 
-    function validateToken(string $userId, string $token): bool
+    function validateToken(string $token): bool
     {
-        $sqlBuilder = $this->database->prepare("SELECT * FROM tokens WHERE tokens.user_id = :user_id AND tokens.token = :token AND tokens.enable");
-        $sqlBuilder->bindValue(":user_id",$userId);
+        $sqlBuilder = $this->database->prepare("SELECT * FROM tokens WHERE tokens.token = :token AND tokens.enable");
         $sqlBuilder->bindValue(":token",$token);
         $sqlBuilder->execute();
 
         return $sqlBuilder->execute() != null;
     }
 
+    /**
+     * @throws TokenNotFoundException
+     * @throws UserNotFoundException
+     */
+    function getUserFromToken(string $token): UserEntity
+    {
+        $sqlBuilder = $this->database->prepare("SELECT * FROM tokens WHERE tokens.token = :token AND tokens.enable");
+        $sqlBuilder->bindValue(":token",$token);
+        $sqlBuilder->execute();
+
+        $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
+        if($result == false)
+        {
+            throw new TokenNotFoundException();
+        }
+        return $this->getUser($result["user_id"]);
+    }
+
     private function createToken(string $userId): TokenEntity
     {
         $token = hash("sha256",strval(rand(PHP_INT_MIN,PHP_INT_MAX)));
-        $sqlBuilder = $this->database->prepare("INSERT INTO tokens (tokens.user_id,tokens.token) VALUES(:user_id,:token)");
+        $sqlBuilder = $this->database->prepare("INSERT INTO tokens (tokens.user_id,tokens.token,tokens.enable) VALUES(:user_id,:token,true)");
         $sqlBuilder->bindValue(":user_id",$userId);
         $sqlBuilder->bindValue(":token",$token);
         $sqlBuilder->execute();

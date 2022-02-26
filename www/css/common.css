@@ -74,6 +74,7 @@ body{
     top: 0;
 }
 .global-navigation-inner{
+    position: relative;
     width: var(--width-main-visual);
     margin: 0 auto 0 auto;
 }
@@ -88,6 +89,10 @@ body{
     display: inline-block;
     font-size: 1.3rem;
 }
+.global-navigation-auth{
+    display: inline;
+    margin-left: 30px;
+}
 .global-navigation-list-item{
     display: inline-block;
     margin-right: 10px;
@@ -96,6 +101,10 @@ body{
     color: black;
     padding: 5px;
     background-color: whitesmoke;
+}
+.global-navigation-user{
+    position: absolute;
+    right: 0;
 }
 
 .timeline-container{

@@ -10,7 +10,8 @@
     "logic/sign-up-logic.ts",
     "helper/helper.ts",
     "sign-in.ts",
-    "sign-up.ts"
+    "sign-up.ts",
+    "models/token.ts"
   ],
   "compilerOptions": {
     "target": "es2020",

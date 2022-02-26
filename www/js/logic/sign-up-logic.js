@@ -9,8 +9,13 @@ define(["require", "exports", "../api-client", "../shared/shared-auth", "../mode
         }
         signUp(mail, password, name, rememberMe) {
             this.apiClient.signUp(new sign_up_request_1.SignUpRequest(mail, password, name, rememberMe)).then((x) => {
-                this.signUpState.ErrorAPIMessage = x.errorMessage;
-                this.signUpState?.StateChanged?.();
+                if (x.success) {
+                    // todo
+                }
+                else {
+                    this.signUpState.ErrorAPIMessage = x.errorMessage;
+                    this.signUpState?.StateChanged?.();
+                }
             }).catch((error) => {
                 this.signUpState.ErrorAPIMessage = error.errorMessage;
                 this.signUpState?.StateChanged?.();
@@ -20,6 +25,7 @@ define(["require", "exports", "../api-client", "../shared/shared-auth", "../mode
             let disableSubmitButton = false;
             this.signUpState.ErrorPasswordMessage = "";
             this.signUpState.ErrorNameMessage = "";
+            this.signUpState.ErrorMailMessage = "";
             if (password.length < shared_auth_1.SharedAuth.passwordMin) {
                 this.signUpState.ErrorPasswordMessage = shared_auth_1.SharedAuth.passWorldMinErrorMessage;
                 disableSubmitButton = true;
@@ -36,7 +42,10 @@ define(["require", "exports", "../api-client", "../shared/shared-auth", "../mode
                 this.signUpState.ErrorNameMessage = shared_auth_1.SharedAuth.nameMaxErrorMessage;
                 disableSubmitButton = true;
             }
-            this.signUpState.ErrorMailMessage = !shared_auth_1.SharedAuth.mailRegex.test(mail) ? shared_auth_1.SharedAuth.mailValidateErrorMessage : "";
+            if (!shared_auth_1.SharedAuth.mailRegex.test(mail)) {
+                this.signUpState.ErrorMailMessage = shared_auth_1.SharedAuth.mailValidateErrorMessage;
+                disableSubmitButton = true;
+            }
             this.signUpState.DisableSubmitButton = disableSubmitButton;
             this.signUpState?.StateChanged?.();
         }

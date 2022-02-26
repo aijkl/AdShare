@@ -1,4 +1,4 @@
-define(["require", "exports", "../api-client", "../models/sign-in-request", "../shared/shared-auth"], function (require, exports, api_client_1, sign_in_request_1, shared_auth_1) {
+define(["require", "exports", "../api-client", "../models/sign-in-request", "../shared/shared-auth", "../helper/helper"], function (require, exports, api_client_1, sign_in_request_1, shared_auth_1, helper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SignInLogic = void 0;
@@ -9,8 +9,15 @@ define(["require", "exports", "../api-client", "../models/sign-in-request", "../
         }
         signIn(mail, password, rememberMe) {
             this.apiClient.signIn(new sign_in_request_1.SignInRequest(mail, password, rememberMe)).then((x) => {
-                this.signInState.ErrorAPIMessage = x.errorMessage;
-                this.signInState?.StateChanged?.();
+                if (x.success) {
+                    if (!helper_1.Helper.isNullOrEmpty(x.data?.url ?? "")) {
+                        window.location.href = x.data.url;
+                    }
+                }
+                else {
+                    this.signInState.ErrorAPIMessage = x.errorMessage;
+                    this.signInState?.StateChanged?.();
+                }
             }).catch((error) => {
                 this.signInState.ErrorAPIMessage = error.errorMessage;
                 this.signInState?.StateChanged?.();
@@ -19,6 +26,7 @@ define(["require", "exports", "../api-client", "../models/sign-in-request", "../
         stateChange(mail, password) {
             let disableSubmitButton = false;
             this.signInState.ErrorPasswordMessage = "";
+            this.signInState.ErrorMailMessage = "";
             if (password.length < shared_auth_1.SharedAuth.passwordMin) {
                 this.signInState.ErrorPasswordMessage = shared_auth_1.SharedAuth.passWorldMinErrorMessage;
                 disableSubmitButton = true;
@@ -27,7 +35,10 @@ define(["require", "exports", "../api-client", "../models/sign-in-request", "../
                 this.signInState.ErrorPasswordMessage = shared_auth_1.SharedAuth.passWorldMaxErrorMessage;
                 disableSubmitButton = true;
             }
-            this.signInState.ErrorMailMessage = !shared_auth_1.SharedAuth.mailRegex.test(mail) ? shared_auth_1.SharedAuth.mailValidateErrorMessage : "";
+            if (!shared_auth_1.SharedAuth.mailRegex.test(mail)) {
+                this.signInState.ErrorMailMessage = shared_auth_1.SharedAuth.mailValidateErrorMessage;
+                disableSubmitButton = true;
+            }
             this.signInState.DisableSubmitButton = disableSubmitButton;
             this.signInState?.StateChanged?.();
         }

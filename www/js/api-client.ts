@@ -1,5 +1,6 @@
 import {SignInRequest} from "./models/sign-in-request";
 import {SignUpRequest} from "./models/sign-up-request";
+import {RedirectUrl} from "./models/redirect-url";
 
 export class ApiClient
 {
@@ -7,11 +8,12 @@ export class ApiClient
     constructor()
     {
     }
-    async signIn(signInRequest:SignInRequest): Promise<AdShareResponse>
+    async signIn(signInRequest:SignInRequest): Promise<AdShareResponse<RedirectUrl>>
     {
-        return  new Promise<AdShareResponse>((resolve, reject) =>
+        return  new Promise<AdShareResponse<RedirectUrl>>((resolve, reject) =>
         {
-            fetch(`${this.baseUrl}/auth/sign-in.php`, {
+            fetch(`${this.baseUrl}/auth/sign-in`, {
+                credentials: 'same-origin',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -21,16 +23,17 @@ export class ApiClient
             {
                 value.json().then(json =>
                 {
-                    return resolve(json as AdShareResponse);
+                    return resolve(json as AdShareResponse<RedirectUrl>);
                 });
             });
         });
     }
-    async signUp(signUpRequest:SignUpRequest): Promise<AdShareResponse>
+    async signUp(signUpRequest:SignUpRequest): Promise<AdShareResponse<RedirectUrl>>
     {
-        return  new Promise<AdShareResponse>((resolve, reject) =>
+        return  new Promise<AdShareResponse<RedirectUrl>>((resolve, reject) =>
         {
-            fetch(`${this.baseUrl}/auth/sign-up.php`, {
+            fetch(`${this.baseUrl}/auth/sign-up`, {
+                credentials: 'same-origin',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -40,7 +43,7 @@ export class ApiClient
             {
                 value.json().then(json =>
                 {
-                    return resolve(json as AdShareResponse);
+                    return resolve(json as AdShareResponse<RedirectUrl>);
                 });
             });
         });

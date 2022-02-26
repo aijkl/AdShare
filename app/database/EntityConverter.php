@@ -10,6 +10,7 @@ class EntityConverter
         $userEntity = new UserEntity();
         $userEntity->id = $array["id"];
         $userEntity->mail = $array["mail"];
+        $userEntity->name = $array["name"];
         $userEntity->passwordSha256 = $array["password_sha256"];
         return $userEntity;
     }

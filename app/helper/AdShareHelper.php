@@ -16,6 +16,35 @@ class AdShareHelper
         return empty($obj);
     }
 
+    /**
+     * @throws UserNotAuthException
+     * @throws UserNotFoundException
+     * @throws TokenNotFoundException
+     */
+    static function getUserFromCookie(): UserEntity
+    {
+        $token = self::asStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
+        if(self::isNullOrEmpty($token))
+        {
+            throw new UserNotAuthException();
+        }
+
+        $dataBase = self::createDataBase();
+        return $dataBase->getUserFromToken($token);
+    }
+
+    static function validateTokenFromCookie(): bool
+    {
+        $token = self::asStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
+        if(self::isNullOrEmpty($token))
+        {
+            return false;
+        }
+
+        $dataBase = self::createDataBase();
+        return $dataBase->validateToken($token);
+    }
+
     static function getLanguageCode(string $defaultLanguage = ConstParameters::DEFAULT_LANG_CODE): string
     {
         $languageCode = self::asStringOrEmpty($_COOKIE,ConstParameters::DEFAULT_LANG_CODE);
@@ -95,9 +124,20 @@ class AdShareHelper
         return true;
     }
 
-    static function asStringOrEmpty($value, string $key) : string
+    static function asStringOrEmpty(array $value, string $key) : string
     {
         if(isset($value[$key])) return $value[$key];
         return "";
+    }
+
+    static function asHashOrEmpty($value, string $key) : string
+    {
+        if(isset($value[$key])) return self::hash($value[$key]);
+        return "";
+    }
+
+    static function hash($value) : string
+    {
+        return hash("sha256",$value);
     }
 }

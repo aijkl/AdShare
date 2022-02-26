@@ -3,21 +3,20 @@
 use Aijkl\AdShare\AdShareHelper;
 use Aijkl\AdShare\ConstParameters;
 use Aijkl\AdShare\PhraseStore;
+use Aijkl\AdShare\RedirectUrl;
 use Aijkl\AdShare\Response;
 use Aijkl\AdShare\SignInRequest;
 use Aijkl\AdShare\UserNotFoundException;
 
-require '../../../app/vendor/autoload.php';
-
 $json = json_decode(file_get_contents("php://input"),true);
 $signInRequest = new SignInRequest();
 $signInRequest->mail = AdShareHelper::asStringOrEmpty($json,ConstParameters::MAIL);
-$signInRequest->password256 = AdShareHelper::asStringOrEmpty($json,ConstParameters::PASSWORD);
+$signInRequest->passwordSha256 = AdShareHelper::asHashOrEmpty($json,ConstParameters::PASSWORD);
 $signInRequest->rememberMe = AdShareHelper::asStringOrEmpty($json,ConstParameters::REMEMBER_ME);
 $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
 
 $response = new Response();
-if(AdShareHelper::checkFormatMail($phrase,$signInRequest->mail,$response) == false || AdShareHelper::checkFormatPassword($phrase,$signInRequest->password256,$response) == false)
+if(AdShareHelper::checkFormatMail($phrase,$signInRequest->mail,$response) == false || AdShareHelper::checkFormatPassword($phrase,$signInRequest->passwordSha256,$response) == false)
 {
     echo json_encode($response);
     exit;
@@ -27,8 +26,15 @@ $database = AdShareHelper::createDataBase();
 try
 {
     $tokenEntity = $database->signIn($signInRequest);
-    setcookie(ConstParameters::TOKEN,$tokenEntity->token,$signInRequest->rememberMe ? time() + ConstParameters::TOKEN_EXPIRES_SECOND : 0);
-    echo json_encode(new Response(true,200,"",$tokenEntity));
+    if($signInRequest->rememberMe)
+    {
+        setcookie(ConstParameters::TOKEN,$tokenEntity->token,path: "/",expires_or_options: time() + ConstParameters::TOKEN_EXPIRES_YEAR,secure: true);
+    }
+    else
+    {
+        setcookie(ConstParameters::TOKEN,$tokenEntity->token,path: "/",secure: true);
+    }
+    echo json_encode(new Response(true,200,"",new RedirectUrl(ConstParameters::HOME_URL)));
 }
 catch (UserNotFoundException $exception)
 {

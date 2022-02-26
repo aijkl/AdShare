@@ -8,7 +8,8 @@ define(["require", "exports"], function (require, exports) {
         }
         async signIn(signInRequest) {
             return new Promise((resolve, reject) => {
-                fetch(`${this.baseUrl}/auth/sign-in.php`, {
+                fetch(`${this.baseUrl}/auth/sign-in`, {
+                    credentials: 'same-origin',
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -23,7 +24,8 @@ define(["require", "exports"], function (require, exports) {
         }
         async signUp(signUpRequest) {
             return new Promise((resolve, reject) => {
-                fetch(`${this.baseUrl}/auth/sign-up.php`, {
+                fetch(`${this.baseUrl}/auth/sign-up`, {
+                    credentials: 'same-origin',
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'

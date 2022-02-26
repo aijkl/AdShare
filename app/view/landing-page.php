@@ -1,13 +1,20 @@
 <head>
-    <?php $title = "ようこそ"; require '../app/components/head-inner-common.php';?>
+    <?php
+    use Aijkl\AdShare\AdShareHelper;
+    use Aijkl\AdShare\PhraseStore;
+    $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
+    $title = $phrase->landingPageTitle;
+    require 'head-inner-common.php';
+    ?>
     <!-- lp -->
-    <link href="css/component.css" rel="stylesheet">
-    <link href="css/landing-page.css" rel="stylesheet">
+    <link href="/css/component.css" rel="stylesheet">
+    <link href="/css/landing-page.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <link href="css/component.css" rel="stylesheet">
+    <link href="/css/component.css" rel="stylesheet">
+    <link href="/css/auth.css" rel="stylesheet">
 </head>
 <body>
-    <?php require '../app/components/global-navigation.php' ?>
+    <?php require 'global-navigation.php' ?>
     <div class="wrap">
         <div class="lp-container">
             <div class="catch-copy-container">
@@ -29,9 +36,9 @@
                     境遇に合わせたアドバイスを行います
                 </p>
             </div>
-            <img class="catch-copy-img" src="debug-assets/lp2.png">
-            <script src="js/landing-page.js"></script>
+            <a class="sign-in-button" href="/auth/sign-up"><?= $phrase->signUpTitle ?></a>
         </div>
     </div>
-    <?php require '../app/components/footer.php' ?>
+    <script src="/js/landing-page.js"></script>
+    <?php require 'footer.php' ?>
 </body>

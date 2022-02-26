@@ -1,15 +1,15 @@
 <head>
-    <?php $title = "ホーム"; require '../app/components/head-inner-common.php'; ?>
+    <?php $title = "ホーム"; require '../../app/components/head-inner-common.php'; ?>
     <title>Home</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/www/js/component.js"></script>
+    <script type="text/javascript" src="/js/component.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <link href="/www/css/component.css" rel="stylesheet">
+    <link href="/css/component.css" rel="stylesheet">
 </head>
 <body>
-    <?php require '../app/components/global-navigation.php' ?>
+    <?php require '../../app/components/global-navigation.php' ?>
     <div class="wrap">
         <div class="popular-main-container">
             <div class="mini-categories-list-container">
@@ -80,7 +80,7 @@
             <div class="popular-timeline-container">
                 <article class="message-container">
                     <section class="profile-container">
-                        <img class="user-icon" src="debug-assets/user-icon3.jpg" alt="user-icon">
+                        <img class="user-icon" src="../../www/debug-assets/user-icon3.jpg" alt="user-icon">
                         <a class="user-name">矢田朋久</a>
                     </section>
                     <section class="message-text-section-container">
@@ -111,7 +111,7 @@
                 </article>
                 <article class="message-container">
                     <section class="profile-container">
-                        <img class="user-icon" src="debug-assets/user-icon2.jpg" alt="user-icon">
+                        <img class="user-icon" src="../../www/debug-assets/user-icon2.jpg" alt="user-icon">
                         <a class="user-name">みんとこ</a>
                     </section>
                     <section class="message-text-section-container">
@@ -142,7 +142,7 @@
                 </article>
                 <article class="message-container">
                     <section class="profile-container">
-                        <img class="user-icon" src="debug-assets/user-icon.jpg" alt="user-icon">
+                        <img class="user-icon" src="../../www/debug-assets/user-icon.jpg" alt="user-icon">
                         <a class="user-name">Orange</a>
                     </section>
                     <section class="message-text-section-container">
@@ -153,10 +153,10 @@
                     </section>
                     <section class="message-text-section-container">
                         <div class="message-image-slider">
-                            <img class="message-image" src="debug-assets/book.jpg">
-                            <img class="message-image" src="debug-assets/book2.jpg">
-                            <img class="message-image" src="debug-assets/book2.jpg">
-                            <img class="message-image" src="debug-assets/book2.jpg">
+                            <img class="message-image" src="../../www/debug-assets/book.jpg">
+                            <img class="message-image" src="../../www/debug-assets/book2.jpg">
+                            <img class="message-image" src="../../www/debug-assets/book2.jpg">
+                            <img class="message-image" src="../../www/debug-assets/book2.jpg">
                         </div>
                         <p>
                             「出るとこだけ！」だけでは分かりにくい。<br>
@@ -179,7 +179,7 @@
                 </article>
                 <article class="message-container">
                     <section class="profile-container">
-                        <img class="user-icon" src="debug-assets/user-icon.jpg" alt="user-icon">
+                        <img class="user-icon" src="../../www/debug-assets/user-icon.jpg" alt="user-icon">
                         <a class="user-name">Orange</a>
                     </section>
                     <section class="message-text-section-container">
@@ -212,5 +212,5 @@
             </div>
         </div>
     </div>
-    <?php require '../app/components/footer.php' ?>
+    <?php require '../../app/components/footer.php' ?>
 </body>

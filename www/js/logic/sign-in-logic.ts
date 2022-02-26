@@ -2,6 +2,8 @@ import {SignInState} from "../state/sign-in-state";
 import {ApiClient} from "../api-client";
 import {SignInRequest} from "../models/sign-in-request";
 import {SharedAuth} from "../shared/shared-auth";
+import {RedirectUrl} from "../models/redirect-url";
+import {Helper} from "../helper/helper";
 
 export class SignInLogic
 {
@@ -18,8 +20,18 @@ export class SignInLogic
     {
         this.apiClient.signIn(new SignInRequest(mail, password,rememberMe)).then((x)=>
         {
-            this.signInState.ErrorAPIMessage = x.errorMessage;
-            this.signInState?.StateChanged?.();
+            if(x.success)
+            {
+                if(!Helper.isNullOrEmpty(x.data?.url ?? ""))
+                {
+                    window.location.href = x.data!.url;
+                }
+            }
+            else
+            {
+                this.signInState.ErrorAPIMessage = x.errorMessage;
+                this.signInState?.StateChanged?.();
+            }
         }).catch((error)=>
         {
             this.signInState.ErrorAPIMessage = error.errorMessage;
@@ -31,6 +43,7 @@ export class SignInLogic
     {
         let disableSubmitButton = false;
         this.signInState.ErrorPasswordMessage = "";
+        this.signInState.ErrorMailMessage = "";
         if (password.length < SharedAuth.passwordMin)
         {
             this.signInState.ErrorPasswordMessage = SharedAuth.passWorldMinErrorMessage;
@@ -41,8 +54,11 @@ export class SignInLogic
             this.signInState.ErrorPasswordMessage = SharedAuth.passWorldMaxErrorMessage;
             disableSubmitButton = true;
         }
-
-        this.signInState.ErrorMailMessage = !SharedAuth.mailRegex.test(mail) ? SharedAuth.mailValidateErrorMessage : "";
+        if(!SharedAuth.mailRegex.test(mail))
+        {
+            this.signInState.ErrorMailMessage = SharedAuth.mailValidateErrorMessage;
+            disableSubmitButton = true;
+        }
         this.signInState.DisableSubmitButton = disableSubmitButton;
         this.signInState?.StateChanged?.();
     }

@@ -7,8 +7,9 @@ class ConstParameters
     public const PASSWORD = "password";
     public const REMEMBER_ME = "rememberMe";
     public const MAIL = "mail";
-    public const TOKEN_EXPIRES_SECOND = 9999;
+    public const TOKEN_EXPIRES_YEAR = 9000;
     public const TOKEN = "token";
+    public const HOME_URL = "/home";
 
     public const PASSWORD_MAX = 120;
     public const PASSWORD_MIN = 6;

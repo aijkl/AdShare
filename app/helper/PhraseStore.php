@@ -1,7 +1,6 @@
 <?php
 namespace Aijkl\AdShare;
 use InvalidArgumentException;
-namespace Aijkl\AdShare;
 
 class PhraseStore
 {
@@ -26,13 +25,20 @@ class PhraseStore
         $jp->mailRequireError = "メールは必須です";
         $jp->nameRequireError = "名前は必須です";
 
+        $jp->signInButton = "ログイン";
+        $jp->signUpTitle = "新規登録";
+
         $jp->mail = "メールアドレス";
         $jp->password = "パスワード";
         $jp->newRegister = "新規登録";
         $jp->rememberMeText = "ログインを保持する";
 
+        $jp->searchTitle = "Search";
+        $jp->homeTitle = "Home";
+        $jp->notFoundTitle = "Not Found";
         $jp->signInTitle = "Sign In";
         $jp->signUpTitle = "Sign Up";
+        $jp->landingPageTitle = "Welcome";
 
         $this->phrases = array($jp);
     }

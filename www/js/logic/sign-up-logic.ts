@@ -18,8 +18,15 @@ export class SignUpLogic
     {
         this.apiClient.signUp(new SignUpRequest(mail, password,name,rememberMe)).then((x)=>
         {
-            this.signUpState.ErrorAPIMessage = x.errorMessage;
-            this.signUpState?.StateChanged?.();
+            if(x.success)
+            {
+                // todo
+            }
+            else
+            {
+                this.signUpState.ErrorAPIMessage = x.errorMessage;
+                this.signUpState?.StateChanged?.();
+            }
         }).catch((error)=>
         {
             this.signUpState.ErrorAPIMessage = error.errorMessage;
@@ -32,6 +39,7 @@ export class SignUpLogic
         let disableSubmitButton = false;
         this.signUpState.ErrorPasswordMessage = "";
         this.signUpState.ErrorNameMessage = "";
+        this.signUpState.ErrorMailMessage = "";
 
         if (password.length < SharedAuth.passwordMin)
         {
@@ -53,8 +61,11 @@ export class SignUpLogic
             this.signUpState.ErrorNameMessage = SharedAuth.nameMaxErrorMessage;
             disableSubmitButton = true;
         }
-
-        this.signUpState.ErrorMailMessage = !SharedAuth.mailRegex.test(mail) ? SharedAuth.mailValidateErrorMessage : "";
+        if(!SharedAuth.mailRegex.test(mail))
+        {
+            this.signUpState.ErrorMailMessage = SharedAuth.mailValidateErrorMessage;
+            disableSubmitButton = true;
+        }
         this.signUpState.DisableSubmitButton = disableSubmitButton;
         this.signUpState?.StateChanged?.();
     }

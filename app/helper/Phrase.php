@@ -30,6 +30,10 @@ class Phrase
     public string $signInButton;
     public string $signUpButton;
 
+    public string $searchTitle;
+    public string $homeTitle;
+    public string $landingPageTitle;
+    public string $notFoundTitle;
     public string $signInTitle;
     public string $signUpTitle;
 

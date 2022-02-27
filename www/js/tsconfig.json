@@ -6,11 +6,14 @@
     "models/adshare-response.ts",
     "state/sign-in-state.ts",
     "state/sign-up-state.ts",
+    "state/search-state.ts",
+    "logic/search-logic.ts",
     "logic/sign-in-logic.ts",
     "logic/sign-up-logic.ts",
     "helper/helper.ts",
     "sign-in.ts",
     "sign-up.ts",
+    "search.ts",
     "models/token.ts"
   ],
   "compilerOptions": {

@@ -1,4 +1,4 @@
-define(["require", "exports", "../api-client", "../shared/shared-auth", "../models/sign-up-request"], function (require, exports, api_client_1, shared_auth_1, sign_up_request_1) {
+define(["require", "exports", "../api-client", "../shared/shared-auth", "../models/sign-up-request", "../helper/helper"], function (require, exports, api_client_1, shared_auth_1, sign_up_request_1, helper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SignUpLogic = void 0;
@@ -10,7 +10,9 @@ define(["require", "exports", "../api-client", "../shared/shared-auth", "../mode
         signUp(mail, password, name, rememberMe) {
             this.apiClient.signUp(new sign_up_request_1.SignUpRequest(mail, password, name, rememberMe)).then((x) => {
                 if (x.success) {
-                    // todo
+                    if (!helper_1.Helper.isNullOrEmpty(x.data?.url ?? "")) {
+                        window.location.href = x.data.url ?? "";
+                    }
                 }
                 else {
                     this.signUpState.ErrorAPIMessage = x.errorMessage;

@@ -25,6 +25,7 @@ define(["require", "exports", "./state/sign-in-state", "./logic/sign-in-logic"],
         }
         catch (e) {
             console.log(e);
+            // todo ユーザーに通知する
         }
     });
 });

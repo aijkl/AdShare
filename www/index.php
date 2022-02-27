@@ -46,6 +46,17 @@ try
         Views::Search($phrase,AdShareHelper::getUserFromCookie());
     });
 
+    $router->map('GET','/test',function ()
+    {
+        $dataBase = AdShareHelper::createDataBase();
+//      $dataBase->createAdvice("",10,"ff0520a6616434e0c96bf54d6bc7d93f6d3df21fa14c294ef8180f1fcb5103ad",true);
+        $adviceEntity = $dataBase->getAdvice("3");
+        echo $adviceEntity->id . "\n";
+        echo $adviceEntity->valid . "\n";
+        echo $adviceEntity->authorId . "\n";
+        echo $adviceEntity->text . "\n";
+    });
+
     $match = $router->match();
 
     if ($match !== false)

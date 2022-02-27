@@ -2,6 +2,7 @@ import {SignUpState} from "../state/sign-up-state";
 import {ApiClient} from "../api-client";
 import {SharedAuth} from "../shared/shared-auth";
 import {SignUpRequest} from "../models/sign-up-request";
+import {Helper} from "../helper/helper";
 
 export class SignUpLogic
 {
@@ -20,7 +21,10 @@ export class SignUpLogic
         {
             if(x.success)
             {
-                // todo
+                if(!Helper.isNullOrEmpty(x.data?.url ?? ""))
+                {
+                    window.location.href = x.data!.url ?? "";
+                }
             }
             else
             {

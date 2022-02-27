@@ -34,5 +34,6 @@ signInButton.addEventListener("click", ()=>
     catch (e)
     {
         console.log(e);
+        // todo ユーザーに通知する
     }
 })

@@ -24,7 +24,7 @@ export class SignInLogic
             {
                 if(!Helper.isNullOrEmpty(x.data?.url ?? ""))
                 {
-                    window.location.href = x.data!.url;
+                    window.location.href = x.data!.url ?? "";
                 }
             }
             else

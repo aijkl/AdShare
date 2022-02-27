@@ -11,7 +11,7 @@ define(["require", "exports", "../api-client", "../models/sign-in-request", "../
             this.apiClient.signIn(new sign_in_request_1.SignInRequest(mail, password, rememberMe)).then((x) => {
                 if (x.success) {
                     if (!helper_1.Helper.isNullOrEmpty(x.data?.url ?? "")) {
-                        window.location.href = x.data.url;
+                        window.location.href = x.data.url ?? "";
                     }
                 }
                 else {

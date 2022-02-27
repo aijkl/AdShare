@@ -11,6 +11,10 @@ body{
     color: lightslategray;
 }
 
+.error{
+    color: firebrick;
+}
+
 .message-container{
     display: flex;
     width: 100%;
@@ -76,11 +80,13 @@ body{
     margin-bottom: 5px;
 }
 
+
+
 /* 検索コンテナ― */
 .search-container{
     width: 50%;
     padding: 30px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 100px auto;
     background-color: white;
 }
 .search-inner-container{
@@ -98,7 +104,12 @@ body{
     display: inline-block;
     margin-right: 8px;
 }
-.search-input{
+.search-input,.search-button{
+    padding-left: 5px;
+    background-color: var(--background-primary);
+}
+.search-textarea{
+    height: 10rem;
     padding-left: 5px;
     background-color: var(--background-primary);
 }
@@ -151,6 +162,20 @@ body{
 .mini-category-likes{
     display: inline;
     float: right;
+}
+
+.search-button{
+    width: 40%;
+    margin: 0 auto 10px auto;
+    display: block;
+    border: #999 1px solid;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.search-button:active
+{
+    background-color: #b4b4b5;
 }
 
 /* popular */

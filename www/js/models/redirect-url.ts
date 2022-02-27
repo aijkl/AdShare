@@ -1,4 +1,4 @@
 export class RedirectUrl
 {
-    public url:string;
+    public url: string | undefined;
 }

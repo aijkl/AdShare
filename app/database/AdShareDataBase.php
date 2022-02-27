@@ -106,6 +106,32 @@ class AdShareDataBase
         return $this->getUser($result["user_id"]);
     }
 
+    function createAdvice(string $text,int $likes,string $author_id,bool $valid)
+    {
+        $sqlBuilder = $this->database->prepare("INSERT INTO advices (text, likes, author_id,valid) VALUES (:text,:likes,:author_id,:valid)");
+        $sqlBuilder->bindValue(":text",$text);
+        $sqlBuilder->bindValue(":likes",$likes);
+        $sqlBuilder->bindValue(":author_id",$author_id);
+        $sqlBuilder->bindValue(":valid",$valid);
+        $sqlBuilder->execute();
+    }
+
+    /**
+     * @throws AdviceNotFoundException
+     */
+    function getAdvice(string $id): AdviceEntity
+    {
+        $sqlBuilder = $this->database->prepare("SELECT * FROM advices WHERE id = :id");
+        $sqlBuilder->bindValue(":id",$id);
+        $sqlBuilder->execute();
+        $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
+        if($result === false)
+        {
+            throw new AdviceNotFoundException();
+        }
+        return new AdviceEntity($result['id'],$result['text'],$result['likes'],$result['valid']);
+    }
+
     private function createToken(string $userId): TokenEntity
     {
         $token = hash("sha256",strval(rand(PHP_INT_MIN,PHP_INT_MAX)));

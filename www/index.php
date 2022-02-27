@@ -1,6 +1,7 @@
 <?php
 
 use Aijkl\AdShare\AdShareHelper;
+use Aijkl\AdShare\ConstParameters;
 use Aijkl\AdShare\PhraseStore;
 use Aijkl\AdShare\Views;
 
@@ -42,6 +43,19 @@ try
 
     $router->map('GET','/search',function ()
     {
+        if(count($_GET) > 0)
+        {
+            $target = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::TARGET);
+            $body = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::BODY);
+            $tag = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::TAG);
+
+            if(AdShareHelper::isNullOrEmpty($target) && AdShareHelper::isNullOrEmpty($body) && AdShareHelper::isNullOrEmpty($tag))
+            {
+                $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
+                Views::BadRequest($phrase);
+                return;
+            }
+        }
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
         Views::Search($phrase,AdShareHelper::getUserFromCookie());
     });
@@ -49,12 +63,7 @@ try
     $router->map('GET','/test',function ()
     {
         $dataBase = AdShareHelper::createDataBase();
-//      $dataBase->createAdvice("",10,"ff0520a6616434e0c96bf54d6bc7d93f6d3df21fa14c294ef8180f1fcb5103ad",true);
-        $adviceEntity = $dataBase->getAdvice("3");
-        echo $adviceEntity->id . "\n";
-        echo $adviceEntity->valid . "\n";
-        echo $adviceEntity->authorId . "\n";
-        echo $adviceEntity->text . "\n";
+        $dataBase->createAdvice("やせたほうがいい","太っている人","ff0520a6616434e0c96bf54d6bc7d93f6d3df21fa14c294ef8180f1fcb5103ad",array("ダイエット","人間"));
     });
 
     $match = $router->match();
@@ -68,11 +77,14 @@ try
     }
     else
     {
-        require_once '../app/view/not-found.php';
+        $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
+        Views::NotFound($phrase);
         header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
     }
 }
 catch (Exception $exception)
 {
+    echo $exception->getMessage();
+    echo $exception->getTraceAsString();
     header($_SERVER["SERVER_PROTOCOL"] . "500 Internal Server Error");
 }

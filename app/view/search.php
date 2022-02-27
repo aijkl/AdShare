@@ -16,35 +16,36 @@
 <body>
     <?php Components::GlobalNavigation($userEntity) ?>
     <div class="wrap">
+        <!-- todo cssの改善 -->
         <!-- todo フレーズファイルへ移動  -->
         <div class="search-container">
             <div class="search-container-title">
                 検索
             </div>
+            <div id="validate-message" class="error"></div>
 
             <div class="search-inner-container">
                 <label class="search-container-label">対象
                     <i class="far fa-question-circle search-container-icon"></i><input id="search-target" class="search-input" type="text" placeholder="対象">
-                    <div id="target-validate-message" class="error"></div>
                 </label>
+                <div id="target-validate-message" class="error"></div>
             </div>
 
             <div class="search-inner-container">
                 <label class="search-container-label">タグ
                     <i class="fas fa-tags search-container-icon"></i><input id="search-tag" class="search-input" type="text" placeholder="タグ">
-                    <div id="tag-validate-message" class="error"></div>
                 </label>
+                <div id="tag-validate-message" class="error"></div>
             </div>
 
             <div class="search-inner-container">
                 <label class="search-container-label">本文
-                    <i class="fas fa-comment search-container-icon"></i><textarea id="search-body" class="search-textarea" type="text" placeholder="対象"></textarea>
-                    <div id="body-validate-message" class="error"></div>
+                    <i class="fas fa-comment search-container-icon"></i><input id="search-body" class="search-input" type="text" placeholder="対象">
                 </label>
+                <div id="body-validate-message" class="error"></div>
             </div>
 
             <label class="search-button">
-                <input type="submit" placeholder="検索">
                 <button id="search-button"><?= $phrase->searchTitle ?></button>
             </label>
             <script

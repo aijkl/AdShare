@@ -3,16 +3,19 @@
 namespace Aijkl\AdShare;
 class AdviceEntity
 {
-    function __construct(string $id,string $text,string $authorId,string $valid)
+    function __construct(string $id,string $body,string $target,string $authorId,string $valid)
     {
         $this->id = $id;
-        $this->text = $text;
+        $this->body = $body;
         $this->authorId = $authorId;
+        $this->target = $target;
+
         $this->valid = $valid;
     }
 
     public string $id;
-    public string $text;
+    public string $body;
+    public string $target;
     public string $authorId;
     public bool $valid;
 }

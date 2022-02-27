@@ -17,6 +17,7 @@ export class SearchLogic
     private readonly targetMaxErrorMessage = `対象は${this.targetMax}以下にしてください`;
     private readonly bodyMaxErrorMessage = `${this.bodyMax}以下にしてください`;
     private readonly tagMaxErrorMessage = `タグは${this.tagMax}以下にしてください`;
+    private readonly emptyErrorMessage = "検索条件を空白にすることはできません";
 
     public constructor(searchState:SearchState)
     {
@@ -35,6 +36,7 @@ export class SearchLogic
         this.searchState.ErrorTagMessage = "";
         this.searchState.ErrorTargetMessage = "";
         this.searchState.ErrorBodyMessage = "";
+        this.searchState.ErrorMessage = "";
 
         if(target.length > this.targetMax)
         {
@@ -51,9 +53,14 @@ export class SearchLogic
             this.searchState.ErrorTagMessage = this.tagMaxErrorMessage;
             disableSubmitButton = true;
         }
+
+        if(!disableSubmitButton && Helper.isNullOrEmpty(target) && Helper.isNullOrEmpty(body) && Helper.isNullOrEmpty(tag))
+        {
+            this.searchState.ErrorMessage = this.emptyErrorMessage;
+            disableSubmitButton = true;
+        }
+
         this.searchState.DisableSubmitButton = disableSubmitButton;
         this.searchState?.StateChanged?.();
-
-        return;
     }
 }

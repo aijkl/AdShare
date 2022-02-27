@@ -26,7 +26,6 @@ class PhraseStore
         $jp->nameRequireError = "名前は必須です";
 
         $jp->signInButton = "ログイン";
-        $jp->signUpTitle = "新規登録";
 
         $jp->mail = "メールアドレス";
         $jp->password = "パスワード";
@@ -34,6 +33,7 @@ class PhraseStore
         $jp->rememberMeText = "ログインを保持する";
 
         $jp->searchTitle = "Search";
+        $jp->badRequestTitle = "Bad Request";
         $jp->homeTitle = "Home";
         $jp->notFoundTitle = "Not Found";
         $jp->signInTitle = "Sign In";

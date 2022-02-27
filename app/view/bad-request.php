@@ -2,16 +2,16 @@
     <?php
     use Aijkl\AdShare\Components;
     $phrase = $phrase ?? null;
-    $title = $phrase->notFoundTitle;
-    Components::InnerHed($phrase->notFoundTitle);
+    $title = $phrase->badRequestTitle;
+    Components::InnerHed($phrase->badRequestTitle);
     ?>
     <link href="/css/error.css" rel="stylesheet">
 </head>
 <body>
     <?php Components::GlobalNavigation() ?>
     <div class="wrap">
-        <div class="not-found">
-            <div class="not-found-title">
+        <div class="bad-request">
+            <div class="bad-request-title">
                 <?= $title ?>
             </div>
         </div>

@@ -9,6 +9,7 @@ let searchButton = document.getElementById("search-button") as HTMLButtonElement
 let targetValidateMessage = document.getElementById("target-validate-message") as HTMLElement;
 let tagValidateMessage = document.getElementById("tag-validate-message") as HTMLElement;
 let bodyValidateMessage = document.getElementById("body-validate-message") as HTMLElement;
+let validateMessage = document.getElementById("validate-message") as HTMLElement;
 
 let searchState = new SearchState();
 let searchLogic = new SearchLogic(searchState);
@@ -17,25 +18,32 @@ searchState.StateChanged = ()=>
     tagValidateMessage.innerText = searchState.ErrorTagMessage;
     targetValidateMessage.innerText = searchState.ErrorTargetMessage;
     bodyValidateMessage.innerText = searchState.ErrorBodyMessage;
+    validateMessage.innerText = searchState.ErrorMessage;
 };
 searchButton.addEventListener("click",()=>
 {
-    console.log("click");
-    searchLogic.stateChange(searchTarget.value ?? "",searchBody.value ?? "",searchTag.value ?? "");
-    if(searchState.DisableSubmitButton)
-    {
-        return;
-    }
-
+    searchButton.disabled = true;
     try
     {
-        let temp = searchLogic.generateUrl(searchTarget.value ?? "",searchTarget.value ?? "",searchTag.value ?? "");
-        console.log(temp);
-        return;
+        searchLogic.stateChange(searchTarget.value ?? "",searchBody.value ?? "",searchTag.value ?? "");
+
+        if(searchState.DisableSubmitButton)
+        {
+            return;
+        }
+
+        try
+        {
+            window.location.href = searchLogic.generateUrl(searchTarget.value ?? "",searchBody.value ?? "",searchTag.value ?? "");
+        }
+        catch (e)
+        {
+            // todo ユーザーに通知する
+            console.log(e);
+        }
     }
-    catch (e)
+    finally
     {
-        console.log(e);
-        // todo ユーザーに通知する
+        searchButton.disabled = false;
     }
 });

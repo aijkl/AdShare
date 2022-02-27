@@ -10,6 +10,9 @@ class ConstParameters
     public const MAIL = "mail";
     public const TOKEN = "token";
     public const LANG_CODE_COOKIE_KEY = "lang";
+    public const TARGET = "target";
+    public const BODY = "body";
+    public const TAG = "tag";
 
     // auth
     public const PASSWORD_MAX = 120;

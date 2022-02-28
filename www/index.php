@@ -55,6 +55,7 @@ try
                 Views::BadRequest($phrase);
                 return;
             }
+
         }
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
         Views::Search($phrase,AdShareHelper::getUserFromCookie());
@@ -63,7 +64,7 @@ try
     $router->map('GET','/test',function ()
     {
         $dataBase = AdShareHelper::createDataBase();
-        $dataBase->createAdvice("やせたほうがいい","太っている人","ff0520a6616434e0c96bf54d6bc7d93f6d3df21fa14c294ef8180f1fcb5103ad",array("ダイエット","人間"));
+        $dataBase->searchAdvice(target: "就活生");
     });
 
     $match = $router->match();

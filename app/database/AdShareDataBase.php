@@ -1,6 +1,7 @@
 <?php
 
 namespace Aijkl\AdShare;
+use ArrayObject;
 use Ginq;
 use PDO;
 use PDOException;
@@ -10,6 +11,7 @@ class AdShareDataBase
     // todo 外部キーの設定をする
     // memo PHPの例外の仕様がわからん..再スローでスタックとレース壊れないの？
     // todo Sql Builderの導入
+    // memo List<T>に該当するクラスがない....
     private PDO $database;
     function __construct(string $dsn,string $userName,string $password)
     {
@@ -127,7 +129,7 @@ class AdShareDataBase
         try
         {
             $sqlBuilder = $this->database->prepare("INSERT INTO advices (body,target, author_id,valid) VALUES (:body,:target,:author_id,:valid);");
-            $sqlBuilder->bindValue(":text",$body);
+            $sqlBuilder->bindValue(":body",$body);
             $sqlBuilder->bindValue(":target",$target);
             $sqlBuilder->bindValue(":author_id",$author_id);
             $sqlBuilder->bindValue(":valid",$valid);
@@ -151,31 +153,43 @@ class AdShareDataBase
         }
     }
 
-    function searchAdvice(string $target,string $body,array $tags)
+    /**
+     * @throws AdviceNotFoundException
+     */
+    function searchAdvice(string $target = null, string $body = null, array $tags = null): ArrayObject
     {
-        $tagsSql = "";
-        for ($i = 0; $i < count($tags); $i++)
+        $executeArray = array();
+
+        $bodySql = "";
+        if($body != null)
         {
-            $tagsSql .=  "OR tags.text = :tag${$i}";
-        }
-        $sql = $this->database->prepare("
-         SELECT *
-         FROM advices 
-         LEFT JOIN tags
-         ON advices.id = tags.advice_id
-         WHERE advices.body LIKE '%:body%' OR advices.target LIKE '%:target% ${$tagsSql}' 
-         GROUP BY advices.id;
-         ");
-        $sql->bindValue(":target",$target);
-        $sql->bindValue(":body",$body);
-        $sql->bindValue(":target",$body);
-        for($i = 0;$i < count($tags); $i++)
-        {
-            $sql->bindValue(`:tag${$i}`,$tags[$i]);
+            $bodySql = "advices.body LIKE ?";
+            $executeArray = array("%$body%");
         }
 
-        $sql->execute();
-        $sql->fetchAll();
+        $targetSql = "";
+        if($target != null)
+        {
+            $targetSql = ($body != null ? "OR" : "") . "advices.target LIKE ?";
+            $executeArray = array_merge($executeArray,array("%$target%"));
+        }
+
+        $tagsSql = "";
+        if($tags != null)
+        {
+            $tagsSql = (($body != null || $target != null) ? "OR" : "") . (substr(str_repeat(',?',count($tags)),1));
+            $executeArray = array_merge($executeArray,$tags);
+        }
+
+        // debug
+        // echo "SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE $bodySql $targetSql $tagsSql GROUP BY advices.id;" . "\n <br>";
+        // print_r($executeArray);
+
+        $sql = $this->database->prepare("SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE $bodySql $targetSql $tagsSql GROUP BY advices.id;");
+        $sql->execute($executeArray);
+
+        $advices = $sql->fetchAll(PDO::FETCH_ASSOC);
+        if($advices == false) throw new AdviceNotFoundException();
     }
 
     function createTag(string $adviceId,string $text)

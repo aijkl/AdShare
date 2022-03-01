@@ -5,6 +5,8 @@ namespace Aijkl\AdShare;
 // クラス間の依存を無くすとわかりやすい
 // 基本的にクラス間の依存はしないけど、このクラスが例外
 use Dotenv\Dotenv;
+use Ginq;
+
 class AdShareHelper
 {
     static function isNullOrEmpty($obj): bool
@@ -132,6 +134,75 @@ class AdShareHelper
         }
 
         return true;
+    }
+
+    static function checkFormatTarget(Phrase $phrase, $receivedTarget, Response &$response) :bool
+    {
+        if(AdShareHelper::isNullOrEmpty($receivedTarget))
+        {
+            $response = new Response(false,400, $phrase->targetRequireError);
+            return false;
+        }
+        if(mb_strlen($receivedTarget) > ConstParameters::TARGET_MAX)
+        {
+            $response = new Response(false,400,$phrase->targetMaxError);
+            return false;
+        }
+        if(mb_strlen($receivedTarget) < ConstParameters::TARGET_MIN)
+        {
+            $response = new Response(false,400,$phrase->targetMinError);
+            return false;
+        }
+        return true;
+    }
+
+    static function checkFormatBody(Phrase $phrase, $receivedBody, Response &$response) :bool
+    {
+        if(AdShareHelper::isNullOrEmpty($receivedBody))
+        {
+            $response = new Response(false,400, $phrase->bodyRequireError);
+            return false;
+        }
+        if(mb_strlen($receivedBody) > ConstParameters::BODY_MAX)
+        {
+            $response = new Response(false,400,$phrase->bodyMaxError);
+            return false;
+        }
+        if(mb_strlen($receivedBody) < ConstParameters::BODY_MIN)
+        {
+            $response = new Response(false,400,$phrase->bodyMinError);
+            return false;
+        }
+        return true;
+    }
+
+    static function checkFormatTag(Phrase $phrase,array|null $receivedTags, Response &$response) :bool
+    {
+        if(AdShareHelper::isNullOrEmpty($receivedTags))
+        {
+            return true;
+        }
+
+        if(count($receivedTags) > ConstParameters::TAG_COUNT_MAX)
+        {
+            $response = new Response(false,400,$phrase->tagCountMaxError);
+            return false;
+        }
+
+        return Ginq::from($receivedTags)->any(function ($x) use($phrase,&$response)
+        {
+            if(mb_strlen($x) > ConstParameters::BODY_MAX)
+            {
+                $response = new Response(false,400,$phrase->tagElementMaxError);
+                return false;
+            }
+            if(mb_strlen($x) < ConstParameters::BODY_MIN)
+            {
+                $response = new Response(false,400,$phrase->tagElementMinError);
+                return false;
+            }
+            return true;
+        });
     }
 
     static function getStringOrEmpty(array $value, string $key) : string

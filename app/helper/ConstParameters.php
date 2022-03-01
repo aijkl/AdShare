@@ -24,10 +24,20 @@ class ConstParameters
     public const TOKEN_EXPIRES_YEAR = 9000;
     public const MAIL_REGEX = "/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/";
 
-    // search
+    // search advice
+    public const SEARCH_TARGET_MAX = 20;
+    public const SEARCH_BODY_MAX = 20;
+    public const SEARCH_TAG_MAX = 20;
+
+    // create advice
     public const TARGET_MAX = 20;
-    public const BODY_MAX = 20;
-    public const TAG_MAX = 20;
+    public const TARGET_MIN = 2;
+    public const BODY_MAX = 300;
+    public const BODY_MIN = 10;
+    public const TAG_ELEMENT_MAX = 20;
+    public const TAG_ELEMENT_MIN = 2;
+    public const TAG_COUNT_MAX = 10;
+    public const TAG_COUNT_MIN = 0;
 
     public const HOME_URL = "/home";
     public const DEFAULT_LANG_CODE = "ja";

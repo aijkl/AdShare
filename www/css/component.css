@@ -84,39 +84,38 @@ body{
 
 
 /* 検索コンテナ― */
-.search-container{
-    width: 50%;
-    padding: 30px;
-    margin: 0 auto 100px auto;
+.search-container-parent,.advice-form-parent{
+   text-align: center;
+}
+.search-container,.advice-form-container{
+    text-align: left;
+    display: inline-block;
+    padding: 50px 100px;
+    margin: 0 auto 50px auto;
     background-color: white;
 }
-.search-inner-container{
+.search-inner-container,.advice-inner-container{
     margin-bottom: 10px;
 }
-.search-inner-container:nth-last-of-type(1){
+.search-inner-container:nth-last-of-type(1),.advice-inner-container:nth-last-of-type(1){
     margin-bottom: 30px;
 }
-.search-container-title{
-    font-size: 1.5rem;
+.search-container-title,.advice-container-title{
+    font-size: 1.7rem;
     margin-bottom: 20px;
 }
-.search-container-label{
-    font-size: 1.2rem;
+.search-container-label,.advice-container-label{
+    font-size: 1.5rem;
     margin-bottom: 5px;
 }
-.search-container-icon{
+.search-container-icon,.advice-container-icon{
     display: inline-block;
     margin-right: 8px;
 }
-.search-input,.search-button{
+.search-input,.search-button,.advice-button,.advice-input{
     width: 70%;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: var(--background-primary);
-}
-.search-textarea{
-    height: 10rem;
-    padding-left: 5px;
     background-color: var(--background-primary);
 }
 
@@ -170,8 +169,9 @@ body{
     float: right;
 }
 
-.search-button{
+.search-button,.advice-button{
     width: 40%;
+    font-weight: bold;
     margin: 0 auto 10px auto;
     display: block;
     border: #999 1px solid;
@@ -179,7 +179,7 @@ body{
     font-size: 0.9rem;
     text-align: center;
 }
-.search-button:active
+.search-button:active,.advice-button:active
 {
     background-color: #b4b4b5;
 }

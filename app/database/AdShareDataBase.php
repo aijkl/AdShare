@@ -2,6 +2,7 @@
 
 namespace Aijkl\AdShare;
 use ArrayObject;
+use Exception;
 use Ginq;
 use PDO;
 use PDOException;
@@ -140,8 +141,11 @@ class AdShareDataBase
         return $this->getUser($result[TokenEntity::COLUMN_USER_ID]);
     }
 
-    function createAdvice(string $body,string $target,string $author_id,array $tags = null,bool $valid = true)
+    function createAdvice(string $body,string $target,string $author_id,array $tags = null,array $imageIds = null,bool $valid = true) : AdviceEntity
     {
+        // todo image
+        if($imageIds != null) throw new Exception("まだ実装していません！！");
+
         $this->database->beginTransaction();
         try
         {
@@ -160,8 +164,9 @@ class AdShareDataBase
                     $this->createTag($adviceId,$tag);
                 }
             }
-
             $this->database->commit();
+
+            return new AdviceEntity($adviceId,$body,$target,0,$tags,$imageIds,$author_id);
         }
         catch (PDOException $exception)
         {
@@ -329,7 +334,7 @@ class AdShareDataBase
             // ignore exception
         }
 
-        return new AdviceEntity($advice['id'],$advice['body'],$advice['target'],$advice["likes"],$tags,$imageIds,$advice['likes'],$advice['valid']);
+        return new AdviceEntity($advice['id'],$advice['body'],$advice['target'],$advice["likes"],$tags,$imageIds,$advice['author_id'],$advice['valid']);
     }
 
     private function createToken(string $userId): TokenEntity

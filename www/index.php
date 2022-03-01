@@ -3,8 +3,6 @@
 use Aijkl\AdShare\AdShareHelper;
 use Aijkl\AdShare\PhraseStore;
 use Aijkl\AdShare\Views;
-use Aijkl\AdShare\IndexController;
-use Aijkl\AdShare\AuthController;
 
 require_once '../app/vendor/autoload.php';
 $router = new AltoRouter();
@@ -17,11 +15,14 @@ try
     $router->map('GET','/auth/sign-up','Aijkl\AdShare\AuthController::signUpForm');
     $router->map('GET','/auth/sign-out','Aijkl\AdShare\AuthController::signOut');
 
-    $router->map('GET','/test',"Aijkl\AdShare\TestController::test","test");
-
-    $router->map('GET','@(index|home)','Aijkl\AdShare\IndexController::index',"index");
     $router->map( 'GET', '/image/[*:id]','Aijkl\AdShare\ImageController::showImage');
-    $router->map('GET','/search', 'Aijkl\AdShare\SearchController::search', 'search');
+    $router->map('GET','/search/advice', 'Aijkl\AdShare\SearchController::search', 'search');
+    $router->map('GET','/create/advice', 'Aijkl\AdShare\AdviceController::createForm', 'createForm');
+    $router->map('POST','/create/advice', 'Aijkl\AdShare\AdviceController::create', 'create');
+
+    $router->map('GET','/show/advice/[*:id]',"Aijkl\AdShare\AdviceController::show","show");
+    $router->map('GET','/test',"Aijkl\AdShare\TestController::test","test");
+    $router->map('GET','@(index|home|/)','Aijkl\AdShare\IndexController::index',"index");
 
     $match = $router->match();
 

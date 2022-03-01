@@ -7,7 +7,7 @@ define(["require", "exports", "../api-client", "../helper/helper"], function (re
             this.targetMax = 20;
             this.bodyMax = 20;
             this.tagMax = 20;
-            this.baseUrl = "/search";
+            this.baseUrl = "/search/advice";
             this.targetMaxErrorMessage = `対象は${this.targetMax}以下にしてください`;
             this.bodyMaxErrorMessage = `${this.bodyMax}以下にしてください`;
             this.tagMaxErrorMessage = `タグは${this.tagMax}以下にしてください`;

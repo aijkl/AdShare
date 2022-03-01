@@ -1,4 +1,4 @@
-export class SearchState
+export class AdviceState
 {
     public ErrorTargetMessage:string;
     public ErrorBodyMessage:string;

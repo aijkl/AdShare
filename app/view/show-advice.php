@@ -1,10 +1,10 @@
 <head>
     <?php
-        use Aijkl\AdShare\Components;
-        $phrase = $phrase ?? null;
-        $userEntity = $userEntity ?? null;
-        $adviceUIModels = $adviceUIModels ?? null;
-        Components::innerHead($phrase->searchTitle);
+    use Aijkl\AdShare\Components;
+    $phrase = $phrase ?? null;
+    $userEntity = $userEntity ?? null;
+    $adviceUIModels = $adviceUIModels ?? null;
+    Components::innerHead($phrase->searchTitle);
     ?>
     <link href="/css/component.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
@@ -16,7 +16,6 @@
 <body>
     <?php Components::globalNavigation($userEntity) ?>
     <div class="wrap">
-        <?php Components::search($phrase,$userEntity) ?>
         <?php Components::advices($phrase,$adviceUIModels) ?>
     </div>
     <?php Components::footer() ?>

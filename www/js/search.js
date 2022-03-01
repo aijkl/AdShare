@@ -1,4 +1,4 @@
-define(["require", "exports", "./state/search-state", "./logic/search-logic"], function (require, exports, search_state_1, search_logic_1) {
+define(["require", "exports", "./state/advice-state", "./logic/search-logic"], function (require, exports, advice_state_1, search_logic_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let searchTarget = document.getElementById("search-target");
@@ -9,7 +9,7 @@ define(["require", "exports", "./state/search-state", "./logic/search-logic"], f
     let tagValidateMessage = document.getElementById("tag-validate-message");
     let bodyValidateMessage = document.getElementById("body-validate-message");
     let validateMessage = document.getElementById("validate-message");
-    let searchState = new search_state_1.SearchState();
+    let searchState = new advice_state_1.AdviceState();
     let searchLogic = new search_logic_1.SearchLogic(searchState);
     searchState.StateChanged = () => {
         tagValidateMessage.innerText = searchState.ErrorTagMessage;

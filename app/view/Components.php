@@ -15,6 +15,12 @@ class Components
     {
         return require __DIR__ . "/footer.php";
     }
+
+    static function search(Phrase $phrase, UserEntity $userEntity = null)
+    {
+        return require __DIR__ . "/search.php";
+    }
+
     /**
      * @param AdviceUIModel[] $adviceUIModels
      */

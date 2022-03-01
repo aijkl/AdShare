@@ -6,7 +6,7 @@
     "models/adshare-response.ts",
     "state/sign-in-state.ts",
     "state/sign-up-state.ts",
-    "state/search-state.ts",
+    "state/advice-state.ts",
     "logic/search-logic.ts",
     "logic/sign-in-logic.ts",
     "logic/sign-up-logic.ts",
@@ -14,6 +14,7 @@
     "sign-in.ts",
     "sign-up.ts",
     "search.ts",
+    "create-advice.ts",
     "models/token.ts"
   ],
   "compilerOptions": {

@@ -12,7 +12,7 @@
                 <a class="user-name"><?= $adviceUIModel->userProfileEntity->userName ?></a>
             </section>
             <section class="message-text-section-container">
-                <p class="message-text-section-title"><?= $phrase->targetText ?></p>
+                <p class="message-text-section-title"><?= $phrase->targetPlaceHolder ?></p>
                 <p>
                     <?= $adviceUIModel->adviceEntity->target ?>
                 </p>
@@ -26,12 +26,14 @@
                 <div class="message-footer-element">
                     <i class="far fa-thumbs-up like-count"></i><?= $adviceUIModel->adviceEntity->likes ?>
                 </div>
+                <?php if($adviceUIModel->adviceEntity->tags != null): ?>
                 <div class="message-footer-element">
                     <i class="fas fa-tag message-footer-element"></i>
                     <?php foreach ($adviceUIModel->adviceEntity->tags as $tag): ?>
                         <a href="#" class="tag"><?= $tag; ?></a>
                     <?php endforeach; ?>
                 </div>
+                <?php endif; ?>
             </section>
         </article>
     <?php endforeach; ?>

@@ -4,22 +4,22 @@ import {SignInRequest} from "../models/sign-in-request";
 import {SharedAuth} from "../shared/shared-auth";
 import {RedirectUrl} from "../models/redirect-url";
 import {Helper} from "../helper/helper";
-import {SearchState} from "../state/search-state";
+import {AdviceState} from "../state/advice-state";
 
 export class SearchLogic
 {
-    private searchState:SearchState
+    private searchState:AdviceState
     private apiClient:ApiClient;
     private readonly targetMax = 20;
     private readonly bodyMax = 20;
     private readonly tagMax = 20;
-    private readonly baseUrl = "/search";
+    private readonly baseUrl = "/search/advice";
     private readonly targetMaxErrorMessage = `対象は${this.targetMax}以下にしてください`;
     private readonly bodyMaxErrorMessage = `${this.bodyMax}以下にしてください`;
     private readonly tagMaxErrorMessage = `タグは${this.tagMax}以下にしてください`;
     private readonly emptyErrorMessage = "検索条件を空白にすることはできません";
 
-    public constructor(searchState:SearchState)
+    public constructor(searchState:AdviceState)
     {
         this.searchState = searchState;
         this.apiClient = new ApiClient();

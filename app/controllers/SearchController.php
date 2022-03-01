@@ -50,12 +50,12 @@ class SearchController
                 return $dataBase->getUserProfile($x);
             })->toArray();
 
-            Views::advices($phrase,$userEntity,$adviceEntities,$userProfiles);
+            Views::searchResult($phrase,$userEntity,$adviceEntities,$userProfiles);
             return;
         }
 
 
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-        Views::search($phrase,$userEntity);
+        Views::searchForm($phrase,$userEntity);
     }
 }

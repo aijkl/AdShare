@@ -1,8 +1,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.SearchState = void 0;
-    class SearchState {
+    exports.AdviceState = void 0;
+    class AdviceState {
         constructor() {
             this.ErrorBodyMessage = "";
             this.ErrorTargetMessage = "";
@@ -11,6 +11,6 @@ define(["require", "exports"], function (require, exports) {
             this.DisableSubmitButton = false;
         }
     }
-    exports.SearchState = SearchState;
+    exports.AdviceState = AdviceState;
 });
-//# sourceMappingURL=search-state.js.map
+//# sourceMappingURL=advice-state.js.map

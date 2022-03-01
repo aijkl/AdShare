@@ -1,6 +1,7 @@
 <head>
     <?php
     use Aijkl\AdShare\AdShareHelper;
+    use Aijkl\AdShare\Components;
     use Aijkl\AdShare\PhraseStore;
     $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
     $title = $phrase->landingPageTitle;
@@ -14,7 +15,7 @@
     <link href="/css/auth.css" rel="stylesheet">
 </head>
 <body>
-    <?php require 'global-navigation.php' ?>
+    <?php Components::globalNavigation() ?>
     <div class="wrap">
         <div class="lp-container">
             <div class="catch-copy-container">
@@ -40,5 +41,5 @@
         </div>
     </div>
     <script src="/js/landing-page.js"></script>
-    <?php require 'footer.php' ?>
+    <?php Components::footer() ?>
 </body>

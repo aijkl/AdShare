@@ -3,12 +3,12 @@
     use Aijkl\AdShare\Components;
     $phrase = $phrase ?? null;
     $title = $phrase->notFoundTitle;
-    Components::InnerHed($phrase->notFoundTitle);
+    Components::innerHead($phrase->notFoundTitle);
     ?>
     <link href="/css/error.css" rel="stylesheet">
 </head>
 <body>
-    <?php Components::GlobalNavigation() ?>
+    <?php Components::globalNavigation() ?>
     <div class="wrap">
         <div class="not-found">
             <div class="not-found-title">
@@ -16,5 +16,5 @@
             </div>
         </div>
     </div>
-    <?php Components::Footer() ?>
+    <?php Components::footer() ?>
 </body>

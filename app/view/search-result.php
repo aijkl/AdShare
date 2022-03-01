@@ -3,7 +3,8 @@
         use Aijkl\AdShare\Components;
         $phrase = $phrase ?? null;
         $userEntity = $userEntity ?? null;
-        Components::innerHead($phrase->homeTitle);
+        $adviceUIModels = $adviceUIModels ?? null;
+        Components::innerHead($phrase->searchTitle);
     ?>
     <link href="/css/component.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
@@ -15,7 +16,7 @@
 <body>
     <?php Components::globalNavigation($userEntity) ?>
     <div class="wrap">
-
+        <?php Components::advices($phrase,$adviceUIModels) ?>
     </div>
     <?php Components::footer() ?>
 </body>

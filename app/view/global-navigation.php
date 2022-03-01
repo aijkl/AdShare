@@ -9,7 +9,7 @@ $userEntity = $userEntity ?? null;
             <!--<li class="global-navigation-list-item"><input class="global-navigation-input" type="text" placeholder="キーワードを入力"></li>-->
             <li class="global-navigation-list-item"><a href="index">ホーム</a></li>
             <li class="global-navigation-list-item"><a href="search">詳細検索</a></li>
-            <li class="global-navigation-list-item"><a href="popular">人気</a></li>
+<!--            <li class="global-navigation-list-item"><a href="popular">人気</a></li>-->
             <?php if ($userEntity == null): ?>
                 <li class="global-navigation-list-item"><a href="/auth/sign-in">ログイン</a></li>
                 <li class="global-navigation-list-item"><a href="/auth/sign-up">新規登録</a></li>

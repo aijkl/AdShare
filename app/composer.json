@@ -3,13 +3,14 @@
     "psr-4": {
       "Aijkl\\AdShare\\": [
         "database",
-        "api/auth",
         "api",
+        "api/auth",
         "helper",
+        "controllers",
         "view",
+        "view/data",
         "database/entities",
-        "database/exceptions",
-        "view/data"
+        "database/exceptions"
       ]
     }
   },

@@ -1,11 +1,20 @@
 {
   "files": [
     "api-client.ts",
-    "sign-in-request.ts",
-    "sign-in.ts",
-    "jquery.js",
+    "models/sign-in-request.ts",
+    "models/sign-up-request.ts",
+    "models/adshare-response.ts",
     "state/sign-in-state.ts",
-    "models/adshare-response.ts"
+    "state/sign-up-state.ts",
+    "state/search-state.ts",
+    "logic/search-logic.ts",
+    "logic/sign-in-logic.ts",
+    "logic/sign-up-logic.ts",
+    "helper/helper.ts",
+    "sign-in.ts",
+    "sign-up.ts",
+    "search.ts",
+    "models/token.ts"
   ],
   "compilerOptions": {
     "target": "es2020",

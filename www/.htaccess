@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond $1 !^(css|js|debug-assets)
+    RewriteRule (.*) index.php [L]
+</IfModule>

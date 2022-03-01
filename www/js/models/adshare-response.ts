@@ -1,8 +1,8 @@
-class AdShareResponse
+class AdShareResponse<T>
 {
     public success: boolean;
     public errorMessage: string;
-    public data: any;
+    public data: T|null;
 
     constructor()
     {

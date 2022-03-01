@@ -1,10 +1,7 @@
-import {ApiClient} from './api-client'
-import {SignInRequest} from "./sign-in-request";
-import {Helper} from "./helper/Helper";
 import {SignInState} from "./state/sign-in-state";
 import {SignInLogic} from "./logic/sign-in-logic";
 
-let signInButton = document.getElementById("sign-in-button") as HTMLButtonElement;
+let signInButton = document.getElementById("auth-button") as HTMLButtonElement;
 let apiErrorText = document.getElementById("api-error") as HTMLButtonElement;
 let mailText  = document.getElementById("mail") as HTMLInputElement
 let passwordText = document.getElementById("password") as HTMLInputElement;
@@ -37,5 +34,6 @@ signInButton.addEventListener("click", ()=>
     catch (e)
     {
         console.log(e);
+        // todo ユーザーに通知する
     }
 })

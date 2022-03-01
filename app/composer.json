@@ -3,16 +3,21 @@
     "psr-4": {
       "Aijkl\\AdShare\\": [
         "database",
+        "api/auth",
         "api",
         "helper",
+        "view",
         "database/entities",
-        "database/exceptions"
+        "database/exceptions",
+        "view/data"
       ]
     }
   },
   "require": {
     "netresearch/jsonmapper": "^4.0",
     "ext-pdo": "*",
-    "vlucas/phpdotenv": "^5.4"
+    "vlucas/phpdotenv": "^5.4",
+    "altorouter/altorouter": "^2.0",
+    "ginq/ginq": "dev-master"
   }
 }

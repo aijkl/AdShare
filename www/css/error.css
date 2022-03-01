@@ -1,0 +1,10 @@
+.not-found,.bad-request{
+    width: 70%;
+    margin: 0 auto 0 auto;
+}
+.not-found-title,.bad-request-title{
+    width: 100%;
+    text-align: center;
+    line-height: 4rem;
+    font-size: 4rem;
+}

@@ -15,7 +15,7 @@
 <body>
     <?php Components::GlobalNavigation($userEntity) ?>
     <div class="wrap">
-        <div class="timeline-container">
+        <div class="advice-container">
             <article class="message-container">
                 <section class="profile-container">
                     <img class="user-icon" src="debug-assets/user-icon3.jpg" alt="user-icon">

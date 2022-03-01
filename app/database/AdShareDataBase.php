@@ -153,43 +153,72 @@ class AdShareDataBase
         }
     }
 
-    /**
-     * @throws AdviceNotFoundException
-     */
-    function searchAdvice(string $target = null, string $body = null, array $tags = null): ArrayObject
+    function searchAdvice(string $target = null, string $body = null, array $tags = null): array | false
     {
         $executeArray = array();
-
         $bodySql = "";
-        if($body != null)
+        if($this->isNullOrEmpty($body) == false)
         {
             $bodySql = "advices.body LIKE ?";
             $executeArray = array("%$body%");
         }
-
         $targetSql = "";
-        if($target != null)
+        if($this->isNullOrEmpty($target) == false)
         {
             $targetSql = ($body != null ? "OR" : "") . "advices.target LIKE ?";
             $executeArray = array_merge($executeArray,array("%$target%"));
         }
-
         $tagsSql = "";
-        if($tags != null)
+        if($this->isNullOrEmpty($tags) == false)
         {
             $tagsSql = (($body != null || $target != null) ? "OR" : "") . (substr(str_repeat(',?',count($tags)),1));
             $executeArray = array_merge($executeArray,$tags);
         }
 
-        // debug
-        // echo "SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE $bodySql $targetSql $tagsSql GROUP BY advices.id;" . "\n <br>";
-        // print_r($executeArray);
-
-        $sql = $this->database->prepare("SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE $bodySql $targetSql $tagsSql GROUP BY advices.id;");
+        $likeSql = "$bodySql $targetSql $tagsSql";
+        $where = "advices.valid = 1".(empty($likeSql) ? " " : " AND "). "$likeSql";
+        $sql = $this->database->prepare("SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE ${where} GROUP BY advices.id;");
         $sql->execute($executeArray);
 
         $advices = $sql->fetchAll(PDO::FETCH_ASSOC);
-        if($advices == false) throw new AdviceNotFoundException();
+        if($advices === false) return false;
+
+        $adviceEntities = array();
+        foreach ($advices as $advice)
+        {
+            $originalTags = null;
+            $imageIds = null;
+            $users = null;
+            try
+            {
+                $originalTags = $this->getTags($advice["id"]);
+            }
+            catch(TagNotFoundException)
+            {
+                //ignore exception
+            }
+
+            try
+            {
+                $imageIds = $this->getImageIds($advice["id"]);
+            }
+            catch (EntityNotFoundException)
+            {
+                // ignore exception
+            }
+
+            try
+            {
+                $user = $this->getImageIds($advice["id"]);
+            }
+            catch (EntityNotFoundException)
+            {
+                // ignore exception
+            }
+
+            $adviceEntities[] = new AdviceEntity($advice["id"], $advice["body"], $advice["target"], $originalTags,$imageIds, $advice["author_id"]);
+        }
+        return $adviceEntities;
     }
 
     function createTag(string $adviceId,string $text)
@@ -198,6 +227,34 @@ class AdShareDataBase
         $sqlBuilder->bindValue(":advice_id",$adviceId);
         $sqlBuilder->bindValue(":text",$text);
         $sqlBuilder->execute();
+    }
+
+    /**
+     * @throws TagNotFoundException
+     */
+    function getTags(string $adviceId): array
+    {
+        $sql = $this->database->prepare("SELECT tags.text FROM tags WHERE tags.advice_id = :advice_id");
+        $sql->bindValue(":advice_id",$adviceId);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        if($result == null) throw new TagNotFoundException();
+        return $result;
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
+    function getImageIds(string $adviceId): array
+    {
+        $sql = $this->database->prepare("SELECT advice_images.id FROM advice_images WHERE advice_images.advice_id = :advice_id");
+        $sql->bindValue(":advice_id",$adviceId);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        if($result == null) throw new EntityNotFoundException();
+        return $result;
     }
 
     /**
@@ -228,5 +285,16 @@ class AdShareDataBase
         $tokenEntity->token = $token;
         $tokenEntity->userId = $userId;
         return $tokenEntity;
+    }
+
+    // memo Helperクラスにあるのと同じ
+    // クラス間の依存性を減らしたいからここに設けた
+    static function isNullOrEmpty($obj): bool
+    {
+        if($obj === 0 || $obj === "0"){
+            return false;
+        }
+
+        return empty($obj);
     }
 }

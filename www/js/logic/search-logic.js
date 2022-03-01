@@ -16,7 +16,7 @@ define(["require", "exports", "../api-client", "../helper/helper"], function (re
             this.apiClient = new api_client_1.ApiClient();
         }
         generateUrl(target, body, tag) {
-            return `${this.baseUrl}?target=${target}&body=${body}&tag=${tag}`;
+            return `${this.baseUrl}?target=${target}&body=${body}&${helper_1.Helper.generateQueryString(tag.replace("　", " ").split(" "), "tag")}`;
         }
         stateChange(target, body, tag) {
             let disableSubmitButton = false;

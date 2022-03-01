@@ -33,7 +33,7 @@ try
         try
         {
             $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-            Views::Home($phrase,AdShareHelper::getUserFromCookie());
+            Views::home($phrase,AdShareHelper::getUserFromCookie());
         }
         catch (Exception $exception)
         {
@@ -45,26 +45,34 @@ try
     {
         if(count($_GET) > 0)
         {
-            $target = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::TARGET);
-            $body = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::BODY);
-            $tag = AdShareHelper::asStringOrEmpty($_GET,ConstParameters::TAG);
+            parse_str(parse_url($_SERVER['REQUEST_URI'])['query'],$pursedQuery);
 
-            if(AdShareHelper::isNullOrEmpty($target) && AdShareHelper::isNullOrEmpty($body) && AdShareHelper::isNullOrEmpty($tag))
+            if(AdShareHelper::isNullOrEmpty($target) && AdShareHelper::isNullOrEmpty($body) && $tags == null)
             {
                 $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-                Views::BadRequest($phrase);
+                Views::badRequest($phrase);
                 return;
             }
 
+            $dataBase = AdShareHelper::createDataBase();
+            $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
+            $adviceEntities = $dataBase->searchAdvice(target: $target,body: $body,tags: $tags);
+            if($adviceEntities === false)
+            {
+                Views::notFound($phrase);
+            }
+            print_r($adviceEntities);
+            print_r($tags);
+            return;
         }
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-        Views::Search($phrase,AdShareHelper::getUserFromCookie());
+        Views::search($phrase,AdShareHelper::getUserFromCookie());
     });
 
     $router->map('GET','/test',function ()
     {
         $dataBase = AdShareHelper::createDataBase();
-        $dataBase->searchAdvice(target: "就活生");
+        $dataBase->searchAdvice(target: "基本");
     });
 
     $match = $router->match();
@@ -79,7 +87,7 @@ try
     else
     {
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-        Views::NotFound($phrase);
+        Views::notFound($phrase);
         header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
     }
 }

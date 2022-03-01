@@ -33,6 +33,16 @@ class AdShareHelper
         return $dataBase->getUserFromToken($token);
     }
 
+    static function badRequest()
+    {
+        $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
+        Views::badRequest($phrase);
+    }
+
+    static function notFound()
+    {
+    }
+
     static function validateTokenFromCookie(): bool
     {
         $token = self::asStringOrEmpty($_COOKIE,ConstParameters::TOKEN);

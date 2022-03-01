@@ -12,7 +12,7 @@ class ConstParameters
     public const LANG_CODE_COOKIE_KEY = "lang";
     public const TARGET = "target";
     public const BODY = "body";
-    public const TAG = "tag";
+    public const TAG_ARRAY = "tag";
 
     // auth
     public const PASSWORD_MAX = 120;

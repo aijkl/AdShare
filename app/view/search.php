@@ -3,7 +3,7 @@
     use Aijkl\AdShare\Components;
     $phrase = $phrase ?? null;
     $userEntity = $userEntity ?? null;
-    Components::InnerHed($phrase->searchTitle);
+    Components::innerHead($phrase->searchTitle);
     ?>
     <title>Home</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -14,7 +14,7 @@
     <link href="/css/component.css" rel="stylesheet">
 </head>
 <body>
-    <?php Components::GlobalNavigation($userEntity) ?>
+    <?php Components::globalNavigation($userEntity) ?>
     <div class="wrap">
         <!-- todo cssの改善 -->
         <!-- todo フレーズファイルへ移動  -->
@@ -56,5 +56,5 @@
             ></script>
         </div>
     </div>
-    <?php Components::Footer() ?>
+    <?php Components::footer() ?>
 </body>

@@ -3,16 +3,23 @@
 namespace Aijkl\AdShare;
 class Components
 {
-    static function GlobalNavigation(UserEntity $userEntity = null)
+    static function globalNavigation(UserEntity $userEntity = null)
     {
         return require __DIR__ . "/global-navigation.php";
     }
-    static function InnerHed(string $title)
+    static function innerHead(string $title)
     {
         return require __DIR__ . "/head-inner-common.php";
     }
-    static function Footer()
+    static function footer()
     {
         return require __DIR__ . "/footer.php";
+    }
+    /**
+     * @param AdviceUIModel[] $adviceUIModels
+     */
+    static function advices(Phrase $phrase,array $adviceUIModels)
+    {
+        return require __DIR__ . "/advices.php";
     }
 }

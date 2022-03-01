@@ -18,7 +18,7 @@
         <div class="advice-container">
             <article class="message-container">
                 <section class="profile-container">
-                    <img class="user-icon" src="debug-assets/user-icon3.jpg" alt="user-icon">
+                    <img class="user-icon" src="../../www/static/user-icon3.jpg" alt="user-icon">
                     <a class="user-name">矢田朋久</a>
                 </section>
                 <section class="message-text-section-container">
@@ -49,7 +49,7 @@
             </article>
             <article class="message-container">
                 <section class="profile-container">
-                    <img class="user-icon" src="debug-assets/user-icon2.jpg" alt="user-icon">
+                    <img class="user-icon" src="../../www/static/user-icon2.jpg" alt="user-icon">
                     <a class="user-name">みんとこ</a>
                 </section>
                 <section class="message-text-section-container">
@@ -80,7 +80,7 @@
             </article>
             <article class="message-container">
                 <section class="profile-container">
-                    <img class="user-icon" src="debug-assets/user-icon.jpg" alt="user-icon">
+                    <img class="user-icon" src="../../www/static/user-icon.jpg" alt="user-icon">
                     <a class="user-name">Orange</a>
                 </section>
                 <section class="message-text-section-container">
@@ -91,10 +91,10 @@
                 </section>
                 <section class="message-text-section-container">
                     <div class="message-image-slider">
-                        <img class="message-image" src="debug-assets/book.jpg">
-                        <img class="message-image" src="debug-assets/book2.jpg">
-                        <img class="message-image" src="debug-assets/book2.jpg">
-                        <img class="message-image" src="debug-assets/book2.jpg">
+                        <img class="message-image" src="../../www/static/book.jpg">
+                        <img class="message-image" src="../../www/static/book2.jpg">
+                        <img class="message-image" src="../../www/static/book2.jpg">
+                        <img class="message-image" src="../../www/static/book2.jpg">
                     </div>
                     <p>
                         「出るとこだけ！」だけでは分かりにくい。<br>
@@ -117,7 +117,7 @@
             </article>
             <article class="message-container">
                 <section class="profile-container">
-                    <img class="user-icon" src="debug-assets/user-icon.jpg" alt="user-icon">
+                    <img class="user-icon" src="../../www/static/user-icon.jpg" alt="user-icon">
                     <a class="user-name">Orange</a>
                 </section>
                 <section class="message-text-section-container">

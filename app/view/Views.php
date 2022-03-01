@@ -1,6 +1,8 @@
 <?php
 
 namespace Aijkl\AdShare;
+use Ginq;
+
 class Views
 {
     static function search(Phrase $phrase, UserEntity $userEntity = null)
@@ -11,9 +13,22 @@ class Views
     {
         require __DIR__ . "/home.php";
     }
-    static function advices()
+
+    /**
+     * @param AdviceEntity[] $adviceEntities
+     * @param UserProfileEntity[] $userProfiles
+     */
+    static function advices(Phrase $phrase,array $adviceEntities,array $userProfiles)
     {
-        require __DIR__ . "/";
+        $adviceUIModels = Ginq::from($adviceEntities)->select(function ($x) use($userProfiles)
+        {
+            $userProfile = Ginq::from($userProfiles)->where(function ($y) use($x)
+            {
+                return $y->userId == $x->authorId;
+            })->first();
+            return new AdviceUIModel($x,$userProfile);
+        })->toArray();
+        require __DIR__ . "/advices.php";
     }
     static function notFound(Phrase $phrase)
     {

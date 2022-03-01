@@ -6,10 +6,10 @@ define(["require", "exports"], function (require, exports) {
         static isNullOrEmpty(value) {
             return value == "" || value == null;
         }
-        static generateQueryString(value, keyName) {
+        static convertToQueryString(value, keyName) {
             let queryString = "";
             for (let i = 0; i < value.length; i++) {
-                queryString += `${keyName}[${i}]=${value[i]}`;
+                queryString += `${i != 0 ? "&" : ""}${keyName}[${i}]=${value[i]}`;
             }
             return queryString;
         }

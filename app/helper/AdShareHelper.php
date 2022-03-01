@@ -23,7 +23,7 @@ class AdShareHelper
      */
     static function getUserFromCookie(): UserEntity
     {
-        $token = self::asStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
+        $token = self::getStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
         if(self::isNullOrEmpty($token))
         {
             throw new UserNotAuthException();
@@ -45,7 +45,7 @@ class AdShareHelper
 
     static function validateTokenFromCookie(): bool
     {
-        $token = self::asStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
+        $token = self::getStringOrEmpty($_COOKIE,ConstParameters::TOKEN);
         if(self::isNullOrEmpty($token))
         {
             return false;
@@ -57,7 +57,7 @@ class AdShareHelper
 
     static function getLanguageCode(string $defaultLanguage = ConstParameters::DEFAULT_LANG_CODE): string
     {
-        $languageCode = self::asStringOrEmpty($_COOKIE,ConstParameters::DEFAULT_LANG_CODE);
+        $languageCode = self::getStringOrEmpty($_COOKIE,ConstParameters::DEFAULT_LANG_CODE);
         if(AdShareHelper::isNullOrEmpty($languageCode))
         {
             return $defaultLanguage;
@@ -134,13 +134,19 @@ class AdShareHelper
         return true;
     }
 
-    static function asStringOrEmpty(array $value, string $key) : string
+    static function getStringOrEmpty(array $value, string $key) : string
     {
         if(isset($value[$key])) return $value[$key];
         return "";
     }
 
-    static function asHashOrEmpty($value, string $key) : string
+    static function getArrayOrNull(array $value, string $key) : array|null
+    {
+        if(isset($value[$key])) return $value[$key];
+        return null;
+    }
+
+    static function getHashOrEmpty(array $value, string $key) : string
     {
         if(isset($value[$key])) return self::hash($value[$key]);
         return "";

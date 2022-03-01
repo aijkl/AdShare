@@ -9,8 +9,8 @@ use PDOException;
 class AdShareDataBase
 {
     // todo 外部キーの設定をする
-    // memo PHPの例外の仕様がわからん..再スローでスタックとレース壊れないの？
     // todo Sql Builderの導入
+    // memo PHPの例外の仕様がわからん..再スローでスタックとレース壊れないの？
     // memo List<T>に該当するクラスがない....
     private PDO $database;
     function __construct(string $dsn,string $userName,string $password)
@@ -88,6 +88,23 @@ class AdShareDataBase
         return EntityConverter::ConvertToUserEntity($result);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
+    function getUserProfile(string $userId) : UserProfileEntity
+    {
+        $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.id = :userId");
+        $sqlBuilder->bindValue(":userId",$userId);
+        $sqlBuilder->execute();
+        $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
+        if($result == false)
+        {
+            throw new UserNotFoundException();
+        }
+
+        return EntityConverter::ConvertToUserProfile($result);
+    }
+
     function exitsUser(string $mail) : bool
     {
         $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.mail = :mail");
@@ -120,7 +137,7 @@ class AdShareDataBase
         {
             throw new TokenNotFoundException();
         }
-        return $this->getUser($result["user_id"]);
+        return $this->getUser($result[TokenEntity::COLUMN_USER_ID]);
     }
 
     function createAdvice(string $body,string $target,string $author_id,array $tags = null,bool $valid = true)
@@ -157,26 +174,28 @@ class AdShareDataBase
     {
         $executeArray = array();
         $bodySql = "";
-        if($this->isNullOrEmpty($body) == false)
+        $targetSql = "";
+        $tagsSql = "";
+
+        if(AdShareHelper::isNullOrEmpty($body) == false)
         {
             $bodySql = "advices.body LIKE ?";
             $executeArray = array("%$body%");
         }
-        $targetSql = "";
-        if($this->isNullOrEmpty($target) == false)
+        if(AdShareHelper::isNullOrEmpty($target) == false)
         {
             $targetSql = ($body != null ? "OR" : "") . "advices.target LIKE ?";
             $executeArray = array_merge($executeArray,array("%$target%"));
         }
-        $tagsSql = "";
-        if($this->isNullOrEmpty($tags) == false)
+        if(AdShareHelper::isNullOrEmpty($tags) == false)
         {
-            $tagsSql = (($body != null || $target != null) ? "OR" : "") . (substr(str_repeat(',?',count($tags)),1));
+            $tagsSql = (($body != null || $target != null) ? "OR" : "")  . "(" . substr(str_repeat('OR tags.text LIKE ?',count($tags)),2) . ")";
             $executeArray = array_merge($executeArray,$tags);
         }
 
         $likeSql = "$bodySql $targetSql $tagsSql";
-        $where = "advices.valid = 1".(empty($likeSql) ? " " : " AND "). "$likeSql";
+        $where = "advices.valid = 1".(empty($likeSql) ? " " : " AND "). "(" . "$likeSql" . ")";
+//        echo "SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE ${where} GROUP BY advices.id;<br>";
         $sql = $this->database->prepare("SELECT * FROM advices LEFT JOIN tags ON advices.id = tags.advice_id WHERE ${where} GROUP BY advices.id;");
         $sql->execute($executeArray);
 
@@ -188,10 +207,12 @@ class AdShareDataBase
         {
             $originalTags = null;
             $imageIds = null;
-            $users = null;
             try
             {
-                $originalTags = $this->getTags($advice["id"]);
+                $originalTags = Ginq::from($this->getTags($advice["id"]))->select(function ($x)
+                {
+                    return $x->text;
+                })->toArray();
             }
             catch(TagNotFoundException)
             {
@@ -207,16 +228,7 @@ class AdShareDataBase
                 // ignore exception
             }
 
-            try
-            {
-                $user = $this->getImageIds($advice["id"]);
-            }
-            catch (EntityNotFoundException)
-            {
-                // ignore exception
-            }
-
-            $adviceEntities[] = new AdviceEntity($advice["id"], $advice["body"], $advice["target"], $originalTags,$imageIds, $advice["author_id"]);
+            $adviceEntities[] = new AdviceEntity($advice["id"], $advice["body"], $advice["target"],$advice["likes"], $originalTags,$imageIds, $advice["author_id"]);
         }
         return $adviceEntities;
     }
@@ -230,17 +242,40 @@ class AdShareDataBase
     }
 
     /**
+     * @return TagEntity[]
      * @throws TagNotFoundException
      */
     function getTags(string $adviceId): array
     {
-        $sql = $this->database->prepare("SELECT tags.text FROM tags WHERE tags.advice_id = :advice_id");
+        $sql = $this->database->prepare("SELECT * FROM tags WHERE tags.advice_id = :advice_id");
         $sql->bindValue(":advice_id",$adviceId);
         $sql->execute();
-        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $result = $sql->fetchAll(PDO::FETCH_BOTH);
 
         if($result == null) throw new TagNotFoundException();
-        return $result;
+        return Ginq::from($result)->select(function ($x)
+        {
+            return new TagEntity($x[TagEntity::ADVICE_ID],$x[TagEntity::TEXT]);
+        })->toArray();
+    }
+
+    /**
+     * @throws ImageNotFoundException
+     */
+    function showImage(string $id)
+    {
+        $sql = $this->database->prepare("SELECT * FROM images WHERE images.image_id = :image_id");
+        $sql->bindValue(":image_id",$id);
+        $sql->execute();
+
+        $sql->bindColumn(2, $contentType, PDO::PARAM_STR);
+        $sql->bindColumn(3, $image, PDO::PARAM_LOB);
+
+        if($sql->fetch(PDO::FETCH_BOUND) === null) throw new ImageNotFoundException();
+
+        header("Content-Type: $contentType");
+        fpassthru($image);
+        fclose($image);
     }
 
     /**
@@ -265,12 +300,36 @@ class AdShareDataBase
         $sqlBuilder = $this->database->prepare("SELECT * FROM advices WHERE id = :id");
         $sqlBuilder->bindValue(":id",$id);
         $sqlBuilder->execute();
-        $result = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
-        if($result === false)
+        $advice = $sqlBuilder->fetch(PDO::FETCH_ASSOC);
+        if($advice === false)
         {
             throw new AdviceNotFoundException();
         }
-        return new AdviceEntity($result['id'],$result['body'],$result['target'],$result['likes'],$result['valid']);
+
+        $tags = null;
+        $imageIds = null;
+        try
+        {
+            $tags = Ginq::from($this->getTags($advice["id"]))->select(function ($x)
+            {
+                return $x->text;
+            })->toArray();
+        }
+        catch(TagNotFoundException)
+        {
+            //ignore exception
+        }
+
+        try
+        {
+            $imageIds = $this->getImageIds($advice["id"]);
+        }
+        catch (EntityNotFoundException)
+        {
+            // ignore exception
+        }
+
+        return new AdviceEntity($advice['id'],$advice['body'],$advice['target'],$advice["likes"],$tags,$imageIds,$advice['likes'],$advice['valid']);
     }
 
     private function createToken(string $userId): TokenEntity
@@ -281,20 +340,6 @@ class AdShareDataBase
         $sqlBuilder->bindValue(":token",$token);
         $sqlBuilder->execute();
 
-        $tokenEntity = new TokenEntity();
-        $tokenEntity->token = $token;
-        $tokenEntity->userId = $userId;
-        return $tokenEntity;
-    }
-
-    // memo Helperクラスにあるのと同じ
-    // クラス間の依存性を減らしたいからここに設けた
-    static function isNullOrEmpty($obj): bool
-    {
-        if($obj === 0 || $obj === "0"){
-            return false;
-        }
-
-        return empty($obj);
+        return new TokenEntity($userId,$token,true);
     }
 }

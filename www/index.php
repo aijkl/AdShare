@@ -1,6 +1,7 @@
 <?php
 
 use Aijkl\AdShare\AdShareHelper;
+use Aijkl\AdShare\AdviceEntity;
 use Aijkl\AdShare\ConstParameters;
 use Aijkl\AdShare\PhraseStore;
 use Aijkl\AdShare\Views;
@@ -28,6 +29,19 @@ try
         require_once '../app/view/sign-up-form.php';
     });
 
+    $router->map( 'GET|POST', '/image/[*:id]', function($id)
+    {
+        try
+        {
+            $database = AdShareHelper::createDataBase();
+            $database->showImage($id);
+        }
+        catch (Exception)
+        {
+            http_send_status(404);
+        }
+    });
+
     $router->map('GET','@(index|home)',function ()
     {
         try
@@ -45,7 +59,9 @@ try
     {
         if(count($_GET) > 0)
         {
-            parse_str(parse_url($_SERVER['REQUEST_URI'])['query'],$pursedQuery);
+            $target = AdShareHelper::getStringOrEmpty($_GET,ConstParameters::TARGET);
+            $body = AdShareHelper::getStringOrEmpty($_GET,ConstParameters::BODY);
+            $tags = AdShareHelper::getArrayOrNull($_GET,ConstParameters::TAG_ARRAY);
 
             if(AdShareHelper::isNullOrEmpty($target) && AdShareHelper::isNullOrEmpty($body) && $tags == null)
             {
@@ -61,8 +77,17 @@ try
             {
                 Views::notFound($phrase);
             }
-            print_r($adviceEntities);
-            print_r($tags);
+
+            $userProfiles = Ginq::from($adviceEntities)->select(function (AdviceEntity $x)
+            {
+                return $x->authorId;
+            })->distinct()->select(function ($x) use ($dataBase)
+            {
+                return $dataBase->getUserProfile($x);
+            })->toArray();
+
+            Views::advices($phrase,$adviceEntities,$userProfiles);
+
             return;
         }
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
@@ -77,11 +102,18 @@ try
 
     $match = $router->match();
 
+
     if ($match !== false)
     {
         if (is_callable($match['target']))
         {
-            $match['target']();
+            call_user_func_array( $match['target'], $match['params'] );
+        }
+        else
+        {
+            $params = explode("::", $match['target']);
+            $action = new $params[0]();
+            call_user_func_array(array($action, $params[1]), $match['params']);
         }
     }
     else

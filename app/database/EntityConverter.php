@@ -7,11 +7,11 @@ class EntityConverter
 {
     static function ConvertToUserEntity(array $array): UserEntity
     {
-        $userEntity = new UserEntity();
-        $userEntity->id = $array["id"];
-        $userEntity->mail = $array["mail"];
-        $userEntity->name = $array["name"];
-        $userEntity->passwordSha256 = $array["password_sha256"];
-        return $userEntity;
+        return new UserEntity($array["id"], $array["name"], $array["mail"],$array["icon_image_id"],$array["password_sha256"]);
+    }
+
+    static function ConvertToUserProfile(array $array): UserProfileEntity
+    {
+        return new UserProfileEntity($array["id"],$array["name"],$array["icon_image_id"]);
     }
 }

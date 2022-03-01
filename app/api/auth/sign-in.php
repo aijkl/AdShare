@@ -10,9 +10,9 @@ use Aijkl\AdShare\UserNotFoundException;
 
 $json = json_decode(file_get_contents("php://input"),true);
 $signInRequest = new SignInRequest();
-$signInRequest->mail = AdShareHelper::asStringOrEmpty($json,ConstParameters::MAIL);
-$signInRequest->passwordSha256 = AdShareHelper::asHashOrEmpty($json,ConstParameters::PASSWORD);
-$signInRequest->rememberMe = AdShareHelper::asStringOrEmpty($json,ConstParameters::REMEMBER_ME);
+$signInRequest->mail = AdShareHelper::getStringOrEmpty($json,ConstParameters::MAIL);
+$signInRequest->passwordSha256 = AdShareHelper::getHashOrEmpty($json,ConstParameters::PASSWORD);
+$signInRequest->rememberMe = AdShareHelper::getStringOrEmpty($json,ConstParameters::REMEMBER_ME);
 $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
 
 $response = new Response();

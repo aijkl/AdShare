@@ -8,7 +8,8 @@
         "helper",
         "view",
         "database/entities",
-        "database/exceptions"
+        "database/exceptions",
+        "view/data"
       ]
     }
   },

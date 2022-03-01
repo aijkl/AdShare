@@ -10,14 +10,14 @@ use Aijkl\AdShare\UserExistsException;
 
 $json = json_decode(file_get_contents("php://input"),true);
 $signUpRequest = new SignUpRequest();
-$signUpRequest->mail = AdShareHelper::asStringOrEmpty($json,ConstParameters::MAIL);
-$signUpRequest->rememberMe = AdShareHelper::asStringOrEmpty($json,ConstParameters::REMEMBER_ME);
-$signUpRequest->name = AdShareHelper::asStringOrEmpty($json,ConstParameters::NAME);
-$signUpRequest->passwordHash256 = AdShareHelper::asHashOrEmpty($json,ConstParameters::PASSWORD);
+$signUpRequest->mail = AdShareHelper::getStringOrEmpty($json,ConstParameters::MAIL);
+$signUpRequest->rememberMe = AdShareHelper::getStringOrEmpty($json,ConstParameters::REMEMBER_ME);
+$signUpRequest->name = AdShareHelper::getStringOrEmpty($json,ConstParameters::NAME);
+$signUpRequest->passwordHash256 = AdShareHelper::getHashOrEmpty($json,ConstParameters::PASSWORD);
 $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
 
 $response = new Response();
-$passwordRaw = AdShareHelper::asStringOrEmpty($json,ConstParameters::PASSWORD);
+$passwordRaw = AdShareHelper::getStringOrEmpty($json,ConstParameters::PASSWORD);
 $mailMismatch = AdShareHelper::checkFormatMail($phrase,$signUpRequest->mail,$response) == false;
 $passwordMismatch = AdShareHelper::checkFormatPassword($phrase,$passwordRaw,$response) == false;
 $nameMismatch = AdShareHelper::checkFormatName($phrase,$signUpRequest->name,$response) == false;

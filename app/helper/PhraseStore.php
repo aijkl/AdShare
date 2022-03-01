@@ -31,6 +31,7 @@ class PhraseStore
         $jp->password = "パスワード";
         $jp->newRegister = "新規登録";
         $jp->rememberMeText = "ログインを保持する";
+        $jp->targetText = "対象";
 
         $jp->searchTitle = "Search";
         $jp->badRequestTitle = "Bad Request";

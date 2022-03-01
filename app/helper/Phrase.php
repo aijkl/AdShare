@@ -22,6 +22,7 @@ class Phrase
     public string $password;
     public string $newRegister;
     public string $rememberMeText;
+    public string $targetText;
 
     public string $passwordPlaceHolder;
     public string $mailPlaceHolder;

@@ -11,6 +11,8 @@ try
 {
     $router->map('POST','/api/auth/sign-in','Aijkl\AdShare\AuthController::signIn');
     $router->map('POST','/api/auth/sign-in','Aijkl\AdShare\AuthController::signUp');
+    $router->map('POST','/api/create/advice', 'Aijkl\AdShare\AdviceController::create', 'create');
+
     $router->map('GET','/auth/sign-in','Aijkl\AdShare\AuthController::signInForm');
     $router->map('GET','/auth/sign-up','Aijkl\AdShare\AuthController::signUpForm');
     $router->map('GET','/auth/sign-out','Aijkl\AdShare\AuthController::signOut');
@@ -18,7 +20,6 @@ try
     $router->map( 'GET', '/image/[*:id]','Aijkl\AdShare\ImageController::showImage');
     $router->map('GET','/search/advice', 'Aijkl\AdShare\SearchController::search', 'search');
     $router->map('GET','/create/advice', 'Aijkl\AdShare\AdviceController::createForm', 'createForm');
-    $router->map('POST','/create/advice', 'Aijkl\AdShare\AdviceController::create', 'create');
 
     $router->map('GET','/show/advice/[*:id]',"Aijkl\AdShare\AdviceController::show","show");
     $router->map('GET','/test',"Aijkl\AdShare\TestController::test","test");

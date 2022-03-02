@@ -12,7 +12,7 @@ class ConstParameters
     public const LANG_CODE_COOKIE_KEY = "lang";
     public const TARGET = "target";
     public const BODY = "body";
-    public const TAG_ARRAY = "tag";
+    public const TAG_ARRAY = "tags";
 
     // auth
     public const PASSWORD_MAX = 120;
@@ -24,10 +24,16 @@ class ConstParameters
     public const TOKEN_EXPIRES_YEAR = 9000;
     public const MAIL_REGEX = "/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/";
 
+    // path
+    public const BASE_PATH_SHOW_ADVICE = "/show/advice";
+
     // search advice
     public const SEARCH_TARGET_MAX = 20;
     public const SEARCH_BODY_MAX = 20;
     public const SEARCH_TAG_MAX = 20;
+
+    // home
+    public const ADVICE_VIEW_LIMIT = 20;
 
     // create advice
     public const TARGET_MAX = 20;

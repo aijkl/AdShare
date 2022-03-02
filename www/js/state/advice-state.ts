@@ -4,6 +4,7 @@ export class AdviceState
     public ErrorBodyMessage:string;
     public ErrorTagMessage:string;
     public ErrorMessage:string;
+    public ErrorAPIMessage:string;
     public DisableSubmitButton:boolean;
     public StateChanged: (() => void) | undefined;
 
@@ -13,6 +14,7 @@ export class AdviceState
         this.ErrorTargetMessage = "";
         this.ErrorTagMessage = "";
         this.ErrorMessage = "";
+        this.ErrorAPIMessage = "";
         this.DisableSubmitButton = false;
     }
 }

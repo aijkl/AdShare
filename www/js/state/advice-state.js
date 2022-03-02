@@ -8,6 +8,7 @@ define(["require", "exports"], function (require, exports) {
             this.ErrorTargetMessage = "";
             this.ErrorTagMessage = "";
             this.ErrorMessage = "";
+            this.ErrorAPIMessage = "";
             this.DisableSubmitButton = false;
         }
     }

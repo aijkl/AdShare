@@ -27,7 +27,7 @@ export class SearchLogic
 
     public generateUrl(target:string,body:string,tag:string):string
     {
-        return `${this.baseUrl}?target=${target}&body=${body}&${Helper.convertToQueryString(tag.replace("　"," ").split(" "),"tag")}`;
+        return `${this.baseUrl}?target=${target}&body=${body}&${Helper.convertToQueryString(tag.replace("　"," ").split(" "),"tags")}`;
     }
 
     public stateChange(target:string,body:string,tag:string)

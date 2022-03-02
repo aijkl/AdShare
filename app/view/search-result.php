@@ -3,7 +3,8 @@
         use Aijkl\AdShare\Components;
         $phrase = $phrase ?? null;
         $userEntity = $userEntity ?? null;
-        $adviceUIModels = $adviceUIModels ?? null;
+        $adviceEntities = $adviceEntities ?? null;
+        $userProfiles = $userProfiles ?? null;
         Components::innerHead($phrase->searchTitle);
     ?>
     <link href="/css/component.css" rel="stylesheet">
@@ -17,7 +18,7 @@
     <?php Components::globalNavigation($userEntity) ?>
     <div class="wrap">
         <?php Components::search($phrase,$userEntity) ?>
-        <?php Components::advices($phrase,$adviceUIModels) ?>
+        <?php Components::advices($phrase,$adviceEntities,$userProfiles) ?>
     </div>
     <?php Components::footer() ?>
 </body>

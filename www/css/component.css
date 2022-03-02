@@ -118,6 +118,13 @@ body{
     margin-bottom: 10px;
     background-color: var(--background-primary);
 }
+.advice-textarea{
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--background-primary);
+    height: 10rem;
+}
 
 .text-section-container{
     width: var(--width-sub-visual);

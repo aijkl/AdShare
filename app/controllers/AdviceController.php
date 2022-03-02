@@ -61,8 +61,7 @@ class AdviceController
         {
             $database = AdShareHelper::createDataBase();
             $adviceEntity = $database->createAdvice($body,$target,$userEntity->id,$tags);
-
-            echo json_encode(new Response(true,200,data: $adviceEntity));
+            echo json_encode(new Response(true,200,data: new RedirectUrl(ConstParameters::BASE_PATH_SHOW_ADVICE."/".$adviceEntity->id)));
         }
         catch (Exception $exception)
         {
@@ -82,6 +81,6 @@ class AdviceController
         }
 
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-        Views::createAdviceForm($phrase);
+        Views::createAdviceForm($phrase,$userEntity);
     }
 }

@@ -36,7 +36,7 @@ class AdShareDataBase
             throw new UserNotFoundException();
         }
 
-        $user = EntityConverter::ConvertToUserEntity($result);
+        $user = EntityConverter::convertToUserEntity($result);
         return $this->createToken($user->id);
     }
 
@@ -86,7 +86,7 @@ class AdShareDataBase
             throw new UserNotFoundException();
         }
 
-        return EntityConverter::ConvertToUserEntity($result);
+        return EntityConverter::convertToUserEntity($result);
     }
 
     /**
@@ -103,7 +103,7 @@ class AdShareDataBase
             throw new UserNotFoundException();
         }
 
-        return EntityConverter::ConvertToUserProfile($result);
+        return EntityConverter::convertToUserProfile($result);
     }
 
     function exitsUser(string $mail) : bool
@@ -295,6 +295,54 @@ class AdShareDataBase
 
         if($result == null) throw new EntityNotFoundException();
         return $result;
+    }
+
+
+    /**
+     * @param int $limit
+     * @return AdviceEntity[]
+     * @throws AdviceNotFoundException
+     */
+    function getAdvices(int $limit): array
+    {
+        $sqlBuilder = $this->database->prepare("SELECT * FROM advices WHERE TRUE LIMIT :limit;");
+        $sqlBuilder->bindValue(":limit",$limit,PDO::PARAM_INT);
+        $sqlBuilder->execute();
+        $advices = $sqlBuilder->fetchAll(PDO::FETCH_ASSOC);
+        if($advices === false)
+        {
+            throw new AdviceNotFoundException();
+        }
+
+        $adviceEntities = null;
+        foreach ($advices as $advice)
+        {
+            $tags = null;
+            $imageIds = null;
+            try
+            {
+                $tags = Ginq::from($this->getTags($advice["id"]))->select(function ($x)
+                {
+                    return $x->text;
+                })->toArray();
+            }
+            catch(TagNotFoundException)
+            {
+                //ignore exception
+            }
+
+            try
+            {
+                $imageIds = $this->getImageIds($advice["id"]);
+            }
+            catch (EntityNotFoundException)
+            {
+                // ignore exception
+            }
+
+            $adviceEntities[] = EntityConverter::convertToAdviceEntity($advice,$tags,$imageIds);
+        }
+        return $adviceEntities;
     }
 
     /**

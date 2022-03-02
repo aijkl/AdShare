@@ -10,7 +10,7 @@ class Views
         require __DIR__ . "/search-form.php";
     }
 
-    static function home(Phrase $phrase, UserEntity $userEntity = null)
+    static function home(Phrase $phrase,array $adviceEntities,array $userProfiles,UserEntity $userEntity = null)
     {
         require __DIR__ . "/home.php";
     }
@@ -30,7 +30,7 @@ class Views
         require __DIR__ . "/sign-up-form.php";
     }
 
-    static function createAdviceForm(Phrase $phrase)
+    static function createAdviceForm(Phrase $phrase,UserEntity $userEntity)
     {
         require __DIR__ . "/create-advice-form.php";
     }
@@ -41,24 +41,13 @@ class Views
      */
     static function searchResult(Phrase $phrase,UserEntity|null $userEntity,array $adviceEntities,array $userProfiles)
     {
-        $adviceUIModels = Ginq::from($adviceEntities)->select(function ($x) use($userProfiles)
-        {
-            $x->body = nl2br(htmlspecialchars($x->body));
-            $userProfile = Ginq::from($userProfiles)->where(function ($y) use($x)
-            {
-                return $y->userId == $x->authorId;
-            })->first();
-            $userProfile->uesrName = htmlspecialchars($userProfile->userName);
-            return new AdviceUIModel($x,$userProfile);
-        })->toArray();
         require __DIR__ . "/search-result.php";
     }
 
     static function showAdvice(Phrase $phrase,UserEntity|null $userEntity,AdviceEntity $adviceEntity,UserProfileEntity $userProfile)
     {
-        $adviceEntity->body = nl2br(htmlspecialchars($adviceEntity->body));
-        $userProfile->userName = htmlspecialchars($userProfile->userName);
-        $adviceUIModels = array(new AdviceUIModel($adviceEntity,$userProfile));
+        $adviceEntities = array($adviceEntity);
+        $userProfiles = array($userProfile);
         require __DIR__ . "/show-advice.php";
     }
 

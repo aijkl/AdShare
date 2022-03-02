@@ -191,12 +191,12 @@ class AdShareHelper
 
         return Ginq::from($receivedTags)->any(function ($x) use($phrase,&$response)
         {
-            if(mb_strlen($x) > ConstParameters::BODY_MAX)
+            if(mb_strlen($x) > ConstParameters::TAG_ELEMENT_MAX)
             {
                 $response = new Response(false,400,$phrase->tagElementMaxError);
                 return false;
             }
-            if(mb_strlen($x) < ConstParameters::BODY_MIN)
+            if(mb_strlen($x) < ConstParameters::TAG_ELEMENT_MIN)
             {
                 $response = new Response(false,400,$phrase->tagElementMinError);
                 return false;

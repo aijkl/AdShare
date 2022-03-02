@@ -14,15 +14,13 @@ class IndexController
             $dataBase = AdShareHelper::createDataBase();
             $adviceEntities = $dataBase->getAdvices(ConstParameters::ADVICE_VIEW_LIMIT);
 
-            $userProfiles = Ginq::from($adviceEntities)->select(function (AdviceEntity $x)
-            {
-                return $x->authorId;
-            })->distinct()->select(function ($x) use ($dataBase)
-            {
-                return $dataBase->getUserProfile($x);
-            })->toArray();
+            $userProfiles = AdShareHelper::getUserProfiles($dataBase,$adviceEntities);
 
             Views::home($phrase,$adviceEntities,$userProfiles,AdShareHelper::getUserFromCookie());
+        }
+        catch (UserNotAuthException|UserNotFoundException)
+        {
+            Views::landingPage();
         }
         catch (AdviceNotFoundException)
         {
@@ -30,7 +28,8 @@ class IndexController
         }
         catch (Exception $exception)
         {
-            echo $exception->getMessage();
+            // todo internal server error page
+            echo $exception->getTraceAsString();
         }
     }
 }

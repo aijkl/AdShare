@@ -9,7 +9,6 @@ export class ApiClient
     constructor()
     {
     }
-
     async postAdvice(createAdviceRequest:CreateAdviceRequest): Promise<AdShareResponse<RedirectUrl>>
     {
         return new Promise<AdShareResponse<RedirectUrl>>((resolve, reject) =>

@@ -42,13 +42,7 @@ class SearchController
                 Views::notFound($phrase);
             }
 
-            $userProfiles = Ginq::from($adviceEntities)->select(function (AdviceEntity $x)
-            {
-                return $x->authorId;
-            })->distinct()->select(function ($x) use ($dataBase)
-            {
-                return $dataBase->getUserProfile($x);
-            })->toArray();
+            $userProfiles = AdShareHelper::getUserProfiles($dataBase,$adviceEntities);
 
             Views::searchResult($phrase,$userEntity,$adviceEntities,$userProfiles);
             return;

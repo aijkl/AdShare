@@ -9,9 +9,9 @@ class UserProfileEntity
 
     public string $userName;
     public string $userId;
-    public string $iconImageId;
+    public string|null $iconImageId;
 
-    public function __construct(string $userId,string $userName,string $iconImageId)
+    public function __construct(string $userId,string $userName,string|null $iconImageId)
     {
         $this->userId = $userId;
         $this->userName = $userName;

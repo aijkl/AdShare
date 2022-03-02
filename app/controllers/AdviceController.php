@@ -24,7 +24,7 @@ class AdviceController
             // todo ユーザーが退会したら？？
             $database = AdShareHelper::createDataBase();
             $adviceEntity = $database->getAdvice($id);
-            $userProfile = $database->getUserProfile($adviceEntity->authorId);
+            $userProfile = $database->getUserProfile($adviceEntity->authorId,ConstParameters::DEFAULT_ICON_ID);
             Views::showAdvice($phrase,$userEntity,$adviceEntity,$userProfile);
         }
         catch (UserNotFoundException|AdviceNotFoundException $exception)
@@ -78,6 +78,7 @@ class AdviceController
         catch (UserNotAuthException|TokenNotFoundException|UserNotFoundException)
         {
             Views::landingPage();
+            return;
         }
 
         $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());

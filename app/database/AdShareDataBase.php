@@ -1,7 +1,6 @@
 <?php
 
 namespace Aijkl\AdShare;
-use ArrayObject;
 use Exception;
 use Ginq;
 use PDO;
@@ -92,7 +91,7 @@ class AdShareDataBase
     /**
      * @throws UserNotFoundException
      */
-    function getUserProfile(string $userId) : UserProfileEntity
+    function getUserProfile(string $userId,int $fallbackIconId) : UserProfileEntity
     {
         $sqlBuilder = $this->database->prepare("SELECT * FROM users WHERE users.id = :userId");
         $sqlBuilder->bindValue(":userId",$userId);
@@ -103,7 +102,9 @@ class AdShareDataBase
             throw new UserNotFoundException();
         }
 
-        return EntityConverter::convertToUserProfile($result);
+        $userProfile = EntityConverter::convertToUserProfile($result);
+        $userProfile->iconImageId = $userProfile->iconImageId ?? $fallbackIconId;
+        return  $userProfile;
     }
 
     function exitsUser(string $mail) : bool
@@ -300,12 +301,14 @@ class AdShareDataBase
 
     /**
      * @param int $limit
+     * @param bool $oderByDesk
      * @return AdviceEntity[]
      * @throws AdviceNotFoundException
      */
-    function getAdvices(int $limit): array
+    function getAdvices(int $limit,bool $oderByDesk = true): array
     {
-        $sqlBuilder = $this->database->prepare("SELECT * FROM advices WHERE TRUE LIMIT :limit;");
+        $orderBy = $oderByDesk ? "DESC" : "ASC";
+        $sqlBuilder = $this->database->prepare("SELECT * FROM advices ORDER BY id $orderBy LIMIT :limit;");
         $sqlBuilder->bindValue(":limit",$limit,PDO::PARAM_INT);
         $sqlBuilder->execute();
         $advices = $sqlBuilder->fetchAll(PDO::FETCH_ASSOC);

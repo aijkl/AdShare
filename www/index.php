@@ -10,7 +10,7 @@ $router = new AltoRouter();
 try
 {
     $router->map('POST','/api/auth/sign-in','Aijkl\AdShare\AuthController::signIn');
-    $router->map('POST','/api/auth/sign-in','Aijkl\AdShare\AuthController::signUp');
+    $router->map('POST','/api/auth/sign-up','Aijkl\AdShare\AuthController::signUp');
     $router->map('POST','/api/create/advice', 'Aijkl\AdShare\AdviceController::create', 'create');
 
     $router->map('GET','/auth/sign-in','Aijkl\AdShare\AuthController::signInForm');

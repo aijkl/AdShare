@@ -32,16 +32,18 @@ class ConstParameters
     public const SEARCH_BODY_MAX = 20;
     public const SEARCH_TAG_MAX = 20;
 
+    public const DEFAULT_ICON_ID = 6;
+
     // home
     public const ADVICE_VIEW_LIMIT = 20;
 
     // create advice
     public const TARGET_MAX = 20;
-    public const TARGET_MIN = 2;
+    public const TARGET_MIN = 1;
     public const BODY_MAX = 300;
     public const BODY_MIN = 10;
     public const TAG_ELEMENT_MAX = 20;
-    public const TAG_ELEMENT_MIN = 2;
+    public const TAG_ELEMENT_MIN = 1;
     public const TAG_COUNT_MAX = 10;
     public const TAG_COUNT_MIN = 0;
 

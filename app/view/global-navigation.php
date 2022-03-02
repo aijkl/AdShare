@@ -18,6 +18,7 @@ $userEntity = $userEntity ?? null;
         </ul>
         <?php if ($userEntity != null): ?>
             <a class="global-navigation-user"><?= $userEntity->name ?></a>
+            <a href="/auth/sign-out">ログアウト</a>
         <?php endif; ?>
     </div>
 </nav>

@@ -35,14 +35,20 @@ class AdShareHelper
         return $dataBase->getUserFromToken($token);
     }
 
-    static function badRequest()
-    {
-        $phrase = PhraseStore::getInstance()->getPhrase(AdShareHelper::getLanguageCode());
-        Views::badRequest($phrase);
-    }
 
-    static function notFound()
+    /**
+     * @param AdviceEntity[] $adviceEntities
+     * @return UserProfileEntity[]
+     */
+    static function getUserProfiles(AdShareDataBase $dataBase,array $adviceEntities,int $fallbackIconId = ConstParameters::DEFAULT_ICON_ID): array
     {
+        return Ginq::from($adviceEntities)->select(function (AdviceEntity $x)
+        {
+            return $x->authorId;
+        })->distinct()->select(function ($x) use ($dataBase,$fallbackIconId)
+        {
+            return $dataBase->getUserProfile($x,$fallbackIconId);
+        })->toArray();
     }
 
     static function validateTokenFromCookie(): bool

@@ -8,13 +8,13 @@ export class CreateAdviceLogic
     private adviceState:AdviceState
     private apiClient:ApiClient;
     private readonly targetMax = 20;
-    private readonly targetMin = 2;
+    private readonly targetMin = 1;
     private readonly bodyMax = 300;
     private readonly bodyMin = 10;
     private readonly tagCountMax = 10;
     private readonly tagCountMin = 0;
     private readonly tagElementMax = 20;
-    private readonly tagElementMin = 2;
+    private readonly tagElementMin = 1;
     private readonly targetRequiredErrorMessage = "対象は必須項目です";
     private readonly bodyRequiredErrorMessage = "本文は必須項目です";
     private readonly targetMaxErrorMessage = `対象は${this.targetMax}以下にしてください`;

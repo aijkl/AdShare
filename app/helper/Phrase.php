@@ -33,6 +33,8 @@ class Phrase
     public string $newRegister;
     public string $rememberMeText;
 
+    public string $recentPostsText;
+
     public string $targetLabel;
     public string $bodyLabel;
     public string $tagLabel;

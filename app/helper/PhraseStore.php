@@ -10,6 +10,7 @@ class PhraseStore
     function __construct()
     {
         $jp  = new Phrase("ja");
+
         $jp->authBadParameter = "認証情報が正しくありません！";
         $jp->userExitsError = "お使いのメールアドレスは既に存在しています！";
 
@@ -48,6 +49,8 @@ class PhraseStore
         $jp->targetPlaceHolder = "学生";
         $jp->bodyPlaceHolder = "基本情報";
         $jp->tagPlaceHolder = "HAL 向上";
+
+        $jp->recentPostsText = "最近の投稿";
 
         $jp->tagLabel = "タグ";
         $jp->bodyLabel = "本文";

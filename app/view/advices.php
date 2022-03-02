@@ -5,6 +5,7 @@
     $adviceUIModels = $adviceUIModels ?? null;
 ?>
 <div class="advice-container">
+    <div class="recent-post-title"><?= $phrase->recentPostsText ?></div>
     <?php foreach ($adviceUIModels as $adviceUIModel): ?>
         <article class="message-container">
             <section class="profile-container">
@@ -12,7 +13,7 @@
                 <a class="user-name"><?= $adviceUIModel->userProfileEntity->userName ?></a>
             </section>
             <section class="message-text-section-container">
-                <p class="message-text-section-title"><?= $phrase->targetPlaceHolder ?></p>
+                <p class="message-text-section-title"><?= $phrase->targetLabel ?></p>
                 <p>
                     <?= $adviceUIModel->adviceEntity->target ?>
                 </p>

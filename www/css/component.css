@@ -118,6 +118,11 @@ body{
     margin-bottom: 10px;
     background-color: var(--background-primary);
 }
+.recent-post-title{
+    font-size: 1.8rem;
+    padding: 30px;
+    text-align: center;
+}
 .advice-textarea{
     width: 70%;
     padding: 10px;
